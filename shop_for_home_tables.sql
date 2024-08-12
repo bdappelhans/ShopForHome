@@ -26,7 +26,7 @@ DROP TABLE IF EXISTS coupons;
 CREATE TABLE coupons (
     id INT AUTO_INCREMENT PRIMARY KEY,
     discount DECIMAL(5, 2) NOT NULL, -- Represents a percentage discount (e.g., 10.00 for 10%)
-    is_active BOOLEAN NOT NULL       -- Indicates whether the coupon is active
+    is_active BOOLEAN NOT NULL DEFAULT TRUE       -- Indicates whether the coupon is active
 );
 
 -- Drop the users table if it already exists
@@ -55,7 +55,8 @@ CREATE TABLE products (
     description VARCHAR(255) NOT NULL, -- Description of the product
     price DECIMAL(10, 2) NOT NULL,     -- Price of the product
     stock INT NOT NULL,                -- Quantity of the product in stock
-    image_url VARCHAR(255)             -- URL to the product's image
+    image_url VARCHAR(255),            -- URL to the product's image
+    is_active BOOLEAN DEFAULT TRUE     
 );
     
 -- Drop the orders table if it already exists
@@ -99,3 +100,12 @@ CREATE TABLE wish_list (
     FOREIGN KEY (user_id) REFERENCES users(id),
     FOREIGN KEY (product_id) REFERENCES products(id)
 );
+
+select * from users;
+
+select * from addresses;
+
+select * from coupons;
+
+ALTER TABLE products
+ADD COLUMN is_active BOOLEAN DEFAULT TRUE;
