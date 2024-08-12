@@ -1,5 +1,6 @@
 package com.cogent.shop_for_home_spring_boot.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
 @Entity
@@ -32,6 +33,7 @@ public class User {
 
     @ManyToOne
     @JoinColumn(name = "coupon_id")
+    @JsonIgnoreProperties("users")
     private Coupon coupon;
 
     public Long getId() {
