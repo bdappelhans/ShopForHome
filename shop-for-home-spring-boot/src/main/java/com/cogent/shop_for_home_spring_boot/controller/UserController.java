@@ -41,4 +41,34 @@ public class UserController {
 
         return foundUser;
     }
+
+    @PostMapping("/add")
+    public User addUser(@RequestBody User user) {
+        user.setId(0L);
+
+        return userService.saveUser(user);
+    }
+
+    @PutMapping("/update")
+    public User updateUser(@RequestBody User user) {
+        User foundUser = userService.getById(user.getId());
+
+        if (foundUser == null) {
+            System.out.println("User with id " + user.getId() + " not found");
+            return null;
+        } else {
+            return userService.saveUser(user);
+        }
+    }
+
+    @DeleteMapping("/delete/{userId}")
+    public void deleteUser(@PathVariable Long userId) {
+        User foundUser = userService.getById(userId);
+
+        if (foundUser == null) {
+            System.out.println("User with id " + userId + " not found");
+        } else {
+            userService.deleteUserById(userId);
+        }
+    }
 }
