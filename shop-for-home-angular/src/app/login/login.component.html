@@ -1,1 +1,26 @@
-<p>login works!</p>
+<div class="container">
+    <div class="title">
+        <h1>Welcome!</h1>
+    </div>
+    <h2>Login</h2>
+    <div id="login-form">
+        <form #loginForm="ngForm" (ngSubmit)="attemptLogin(user)">
+            <label for="email">Email</label>
+            <input type="text" id="email" name="email" [(ngModel)]="user.email" required autocomplete="off">
+
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" [(ngModel)]="user.password" required autocomplete="off">
+
+            <label for="role">Role</label>
+            <select id="role" name="role" [(ngModel)]="user.isAdmin" required>
+                <option [ngValue]="false">User</option>
+                <option [ngValue]="true">Admin</option>
+            </select>
+            <br>
+            <button type="submit">Login</button>
+            <br><br>
+        </form>
+    </div>
+    <span>Don't have an account?</span>
+    <br>
+</div>
