@@ -18,7 +18,7 @@ export class LoginComponent {
 
   constructor(private userService: UserService, private router: Router) { }
 
-  user: User = { id: 0, email: '', firstName: '', lastName: '', password: '', isAdmin: false, address: null, coupon: null }
+  user: User = { id: 0, email: '', firstName: '', lastName: '', password: '', admin: false, address: null, coupon: null }
 
   attemptLogin(user: User) {
     console.log("User details entered:");
@@ -40,7 +40,7 @@ export class LoginComponent {
           return;
         }
 
-        if ((foundUser.isAdmin && !user.isAdmin) || (!foundUser.isAdmin && user.isAdmin)) {
+        if ((foundUser.admin && !user.admin) || (!foundUser.admin && user.admin)) {
           alert("Incorrect role");
           return;
         }
@@ -48,9 +48,9 @@ export class LoginComponent {
          // Store user info in local storage
          localStorage.setItem('user', JSON.stringify(foundUser));
 
-        if (foundUser.isAdmin) {
+        if (foundUser.admin) {
           this.router.navigate(['/admin']);
-        } else if (!foundUser.isAdmin) {
+        } else if (!foundUser.admin) {
           this.router.navigate(['/user']);
         }
         
@@ -59,6 +59,10 @@ export class LoginComponent {
         console.error('There was an error fetching user details: ', error);
         alert("Unable to find user");
   });
+  }
+
+  navigateToRegister() {
+    this.router.navigate(['/register']);
   }
 
 }

@@ -1,0 +1,33 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh; /* Full viewport height for centering vertically */
+    text-align: center; /* Center text within the container */
+  }
+  
+  #register-form {
+    max-width: 400px; /* Optional: set a max width for the form */
+  }
+  
+  form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  label, input, select, button {
+    width: 100%; /* Make form elements take full width of the form */
+    margin-bottom: 10px; /* Add some space between form elements */
+    box-sizing: border-box; /* Ensure padding and border are included in the element's total width and height */
+  }
+  
+  button {
+    width: auto; /* Make button auto-width so it's not as wide as the inputs */
+  }
+
+  .error {
+    color: red;
+    margin-bottom: 10px;
+    font-size: 10px;
+  }

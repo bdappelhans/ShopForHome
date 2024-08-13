@@ -7,7 +7,7 @@ export interface User {
     firstName: string,
     lastName: string,
     password: string,
-    isAdmin: boolean,
+    admin: boolean,
     address: Address | null,
     coupon: Coupon | null
 }

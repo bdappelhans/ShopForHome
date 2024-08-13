@@ -12,9 +12,9 @@
             <input type="password" id="password" name="password" [(ngModel)]="user.password" required autocomplete="off">
 
             <label for="role">Role</label>
-            <select id="role" name="role" [(ngModel)]="user.isAdmin" required>
-                <option [ngValue]="false">User</option>
-                <option [ngValue]="true">Admin</option>
+            <select id="role" name="role" [(ngModel)]="user.admin" required>
+                <option [ngValue]=false>User</option>
+                <option [ngValue]=true>Admin</option>
             </select>
             <br>
             <button type="submit">Login</button>
@@ -23,4 +23,5 @@
     </div>
     <span>Don't have an account?</span>
     <br>
+    <button (click)="navigateToRegister()">Register</button>
 </div>

@@ -1,1 +1,28 @@
-<p>register works!</p>
+<div class="container">
+    <div class="title">
+        <h1>Register With Us</h1>
+    </div>
+    <div id="register-form">
+        <form #registerForm="ngForm" (ngSubmit)="attemptRegister(user)">
+            <label for="firstName">First Name</label>
+            <input type="text" id="firstName" name="firstName" [(ngModel)]="user.firstName" required autocomplete="off">
+            <div class="error" *ngIf="nullFirstName">First Name is required</div>
+
+            <label for="lastName">Last Name</label>
+            <input type="text" id="lastName" name="lastName" [(ngModel)]="user.lastName" required autocomplete="off">
+            <div class="error" *ngIf="nullLastName">Last Name is required</div>
+
+            <label for="email">Email</label>
+            <input type="text" id="email" name="email" [(ngModel)]="user.email" required autocomplete="off">
+            <div class="error" *ngIf="nullEmail">Email is required</div>
+
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" [(ngModel)]="user.password" required autocomplete="off">
+            <div class="error" *ngIf="nullPassword">Password is required</div>
+
+            <br>
+            <button type="submit">Register</button>
+            <br><br>
+        </form>
+    </div>
+</div>
