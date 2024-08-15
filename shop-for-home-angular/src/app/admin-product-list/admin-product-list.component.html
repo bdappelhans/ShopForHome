@@ -1,1 +1,31 @@
-<p>admin-product-list works!</p>
+<div class="container">
+    <h2>Products</h2>
+    <div *ngIf="products.length > 0; else noProducts">
+        <table class="list-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Description</th>
+                    <th>Price</th>
+                    <th>Current Stock</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let product of products">
+                    <td>{{ product.id }}</td>
+                    <td>{{ product.description }}</td>
+                    <td>{{ product.price }}</td>
+                    <td>{{ product.stock }}</td>
+                    <td>{{ product.active ? 'Active' : 'Inactive' }}</td>
+                    <td>Action Buttons Here</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <ng-template #noProducts>
+        <p>No Products Available</p>
+    </ng-template>
+</div>
