@@ -1,13 +1,13 @@
 <div class="container">
-    <h2>Products</h2>
-    <div *ngIf="products.length > 0; else noProducts">
-        <table class="list-table">
+    <h1>Products</h1>
+        <table class="list-table" *ngIf="products.length > 0; else noProducts">
             <thead>
                 <tr>
                     <th>ID</th>
+                    <th>Image</th>
                     <th>Description</th>
                     <th>Price</th>
-                    <th>Current Stock</th>
+                    <th>Stock</th>
                     <th>Status</th>
                     <th>Actions</th>
                 </tr>
@@ -15,15 +15,18 @@
             <tbody>
                 <tr *ngFor="let product of products">
                     <td>{{ product.id }}</td>
+                    <td><img [src]="product.imageUrl" alt="{{ product.description }}" class="product-image"></td>
                     <td>{{ product.description }}</td>
                     <td>{{ product.price }}</td>
                     <td>{{ product.stock }}</td>
                     <td>{{ product.active ? 'Active' : 'Inactive' }}</td>
-                    <td>Action Buttons Here</td>
+                    <td>
+                        <button>{{ product.active ? 'Deactivate' : 'Activate' }}</button>
+                        <button>Edit</button>
+                    </td>
                 </tr>
             </tbody>
         </table>
-    </div>
 
     <ng-template #noProducts>
         <p>No Products Available</p>

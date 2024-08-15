@@ -1,0 +1,5 @@
+.product-image {
+    max-width: 100px; /* Adjust size as needed */
+    max-height: 100px; /* Adjust size as needed */
+    object-fit: cover; /* Ensure the image covers the area without distortion */
+}
