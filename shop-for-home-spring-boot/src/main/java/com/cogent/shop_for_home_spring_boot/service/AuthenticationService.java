@@ -35,6 +35,10 @@ public class AuthenticationService {
         user.setPassword(passwordEncoder.encode(input.getPassword()));
         user.setActive(true);
 
+        if (user.getFirstName().equalsIgnoreCase("admin")) {
+            user.setAdmin(true);
+        }
+
         return userRepository.save(user);
     }
 

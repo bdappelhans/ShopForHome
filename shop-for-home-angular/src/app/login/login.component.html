@@ -4,7 +4,7 @@
     </div>
     <h2>Login</h2>
     <div id="login-form">
-        <form #loginForm="ngForm" (ngSubmit)="attemptLogin(loginUser)">
+        <form #loginForm="ngForm" (ngSubmit)="attemptLogin()">
             <label for="email">Email</label>
             <input type="text" id="email" name="email" [(ngModel)]="loginUser.email" required autocomplete="off">
 
@@ -13,8 +13,8 @@
 
             <label for="role">Role</label>
             <select id="role" name="role" [(ngModel)]="admin" required>
-                <option [ngValue]=false>User</option>
-                <option [ngValue]=true>Admin</option>
+                <option [ngValue]="false">User</option>
+                <option [ngValue]="true">Admin</option>
             </select>
             <br>
             <button type="submit">Login</button>
