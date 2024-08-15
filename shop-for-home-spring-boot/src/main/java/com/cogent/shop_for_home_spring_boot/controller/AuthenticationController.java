@@ -7,13 +7,11 @@ import com.cogent.shop_for_home_spring_boot.response.LoginResponse;
 import com.cogent.shop_for_home_spring_boot.service.AuthenticationService;
 import com.cogent.shop_for_home_spring_boot.service.JwtService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RequestMapping("/auth")
 @RestController
+@CrossOrigin(origins = "*")
 public class AuthenticationController {
     private final JwtService jwtService;
 
@@ -33,6 +31,7 @@ public class AuthenticationController {
 
     @PostMapping("/login")
     public ResponseEntity<LoginResponse> authenticate(@RequestBody LoginUserDto loginUserDto) {
+        System.out.println(loginUserDto);
         User authenticatedUser = authenticationService.authenticate(loginUserDto);
 
         String jwtToken = jwtService.generateToken(authenticatedUser);

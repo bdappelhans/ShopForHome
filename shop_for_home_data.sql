@@ -25,3 +25,5 @@ INSERT INTO coupons (discount, is_active) VALUES
 (10.00, TRUE),  -- Coupon with a 10% discount, active
 (20.00, TRUE);  -- Coupon with a 20% discount, active
 
+select * from users;
+

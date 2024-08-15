@@ -2,6 +2,7 @@ package com.cogent.shop_for_home_spring_boot.controller;
 
 import com.cogent.shop_for_home_spring_boot.entity.User;
 import com.cogent.shop_for_home_spring_boot.service.UserService;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -12,22 +13,25 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/users")
-@CrossOrigin(origins = "*")
+@CrossOrigin
 public class UserController {
 
     @Autowired
     private UserService userService;
 
     @GetMapping("/me")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<User> authenticatedUser() {
+        System.out.println("Attempting to grab user details");
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         User currentUser = (User) authentication.getPrincipal();
-
+        System.out.println("Grabbing user: " + currentUser);
         return ResponseEntity.ok(currentUser);
     }
 
     @GetMapping("/all")
+    @PreAuthorize("hasRole('ADMIN')")
     public List<User> getAllUsers() {
         return userService.getAllUsers();
     }
@@ -44,6 +48,7 @@ public class UserController {
     }
 
     @GetMapping("/id/{userId}")
+    @PreAuthorize("hasRole('ADMIN')")
     public User getUserById(@PathVariable Long userId) {
         User foundUser = userService.getById(userId);
 
@@ -62,6 +67,7 @@ public class UserController {
     }
 
     @PutMapping("/update")
+    @PreAuthorize("hasRole('ADMIN')")
     public User updateUser(@RequestBody User user) {
         User foundUser = userService.getById(user.getId());
 

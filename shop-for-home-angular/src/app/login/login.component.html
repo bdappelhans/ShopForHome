@@ -4,15 +4,15 @@
     </div>
     <h2>Login</h2>
     <div id="login-form">
-        <form #loginForm="ngForm" (ngSubmit)="attemptLogin(user)">
+        <form #loginForm="ngForm" (ngSubmit)="attemptLogin(loginUser)">
             <label for="email">Email</label>
-            <input type="text" id="email" name="email" [(ngModel)]="user.email" required autocomplete="off">
+            <input type="text" id="email" name="email" [(ngModel)]="loginUser.email" required autocomplete="off">
 
             <label for="password">Password</label>
-            <input type="password" id="password" name="password" [(ngModel)]="user.password" required autocomplete="off">
+            <input type="password" id="password" name="password" [(ngModel)]="loginUser.password" required autocomplete="off">
 
             <label for="role">Role</label>
-            <select id="role" name="role" [(ngModel)]="user.admin" required>
+            <select id="role" name="role" [(ngModel)]="admin" required>
                 <option [ngValue]=false>User</option>
                 <option [ngValue]=true>Admin</option>
             </select>

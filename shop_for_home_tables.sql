@@ -42,6 +42,7 @@ CREATE TABLE users (
     is_admin BOOLEAN DEFAULT FALSE,     -- Defaults to false
     address_id INT NULL,
     coupon_id INT NULL,
+    is_active BOOLEAN NOT NULL DEFAULT TRUE,
     FOREIGN KEY (address_id) REFERENCES addresses(id),
     FOREIGN KEY (coupon_id) REFERENCES coupons(id)
 );
@@ -107,5 +108,4 @@ select * from addresses;
 
 select * from coupons;
 
-ALTER TABLE products
-ADD COLUMN is_active BOOLEAN DEFAULT TRUE;
+describe orders;
