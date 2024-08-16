@@ -12,12 +12,12 @@
     margin-bottom: 20px;
 }
 
-.products-header {
+.table-list-header {
     grid-column: 2 / 3;
     text-align: center;
 }
 
-.add-product-button-container {
+.add-element-button-container {
     grid-column: 3 / 4;
     text-align: right;
 }

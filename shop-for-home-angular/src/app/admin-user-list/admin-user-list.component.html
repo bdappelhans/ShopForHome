@@ -1,1 +1,35 @@
-<p>admin-user-list works!</p>
+<div class="container">
+    <div class="table-header">
+        <h1 class="table-list-header">Users</h1>
+        <div class="add-element-button-container">
+            <button (click)="addUser()">Add New User</button>
+        </div>
+    </div>
+        <table class="list-table" *ngIf="users.length > 0; else noUsers">
+            <thead>
+                <tr>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Email</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let user of users">
+                    <td>{{ user.firstName }}</td>
+                    <td>{{ user.lastName }}</td>
+                    <td>{{ user.email}}</td>
+                    <td>{{ user.active ? 'Active' : 'Inactive' }}</td>
+                    <td>
+                        <button (click)="changeUserStatus(user)">{{ user.active ? 'Deactivate' : 'Activate' }}</button>
+                        <button (click)="editUser(user.id)">Edit</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+    <ng-template #noUsers>
+        <p>No Users Available</p>
+    </ng-template>
+</div>

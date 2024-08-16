@@ -9,5 +9,6 @@ export interface User {
     password: string,
     admin: boolean,
     address: Address | null,
-    coupon: Coupon | null
+    coupon: Coupon | null,
+    active: boolean
 }

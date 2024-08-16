@@ -1,5 +1,6 @@
 package com.cogent.shop_for_home_spring_boot.controller;
 
+import com.cogent.shop_for_home_spring_boot.dto.UserDto;
 import com.cogent.shop_for_home_spring_boot.entity.User;
 import com.cogent.shop_for_home_spring_boot.service.UserService;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -59,23 +60,16 @@ public class UserController {
         return foundUser;
     }
 
-    @PostMapping("/add")
-    public User addUser(@RequestBody User user) {
-        user.setId(0L);
-
-        return userService.saveUser(user);
-    }
-
     @PutMapping("/update")
     @PreAuthorize("hasRole('ADMIN')")
-    public User updateUser(@RequestBody User user) {
-        User foundUser = userService.getById(user.getId());
+    public User updateUser(@RequestBody UserDto userDto) {
+        User foundUser = userService.getById(userDto.getId());
 
         if (foundUser == null) {
-            System.out.println("User with id " + user.getId() + " not found");
+            System.out.println("User with id " + userDto.getId() + " not found");
             return null;
         } else {
-            return userService.saveUser(user);
+            return userService.saveUser(userDto);
         }
     }
 
