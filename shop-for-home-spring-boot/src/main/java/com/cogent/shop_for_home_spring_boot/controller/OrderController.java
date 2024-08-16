@@ -16,4 +16,9 @@ public class OrderController {
     public Order createOrder(@RequestBody Order order) {
         return orderService.createOrder(order);
     }
+
+    @GetMapping("/{userId}/unplaced")
+    public Order getUnplacedOrders(@PathVariable Long userId) {
+        return orderService.getUnplacedOrderByUserId(userId);
+    }
 }

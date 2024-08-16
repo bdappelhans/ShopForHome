@@ -1,7 +1,7 @@
 import { Coupon } from "./coupon";
 import { User } from "./user";
 
-export interface order {
+export interface Order {
     id: number,
     userId: number,
     orderDate: string | null,
