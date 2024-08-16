@@ -40,6 +40,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User saveUser(UserDto userDto) {
+        System.out.println("Attempting to update user " + userDto.getId());
         User user = getById(userDto.getId());
         user.setId(userDto.getId());
         user.setEmail(userDto.getEmail());

@@ -44,6 +44,11 @@ export class AdminProductAddComponent implements OnInit{
         return;
       }
 
+      if (this.product.description === '') {
+        alert("Error: Description is required");
+        return;
+      }
+
       this.productService.addProduct(this.product).subscribe(
         () => this.router.navigate(['/admin/product-list']),
         (error) => console.error('Error saving product:', error)

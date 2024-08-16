@@ -6,23 +6,31 @@ import { Product } from '../model/product';
 import { FormsModule } from '@angular/forms';
 import { UserService } from '../service/user.service';
 import { User } from '../model/user';
+import { Coupon } from '../model/coupon';
+import { CouponService } from '../service/coupon.service';
 
 @Component({
   selector: 'app-admin-product-edit',
   standalone: true,
   imports: [CommonModule, RouterOutlet, HttpClientModule, RouterModule, FormsModule],
-  providers: [UserService],
+  providers: [UserService, CouponService],
   templateUrl: './admin-user-edit.component.html',
   styleUrl: './admin-user-edit.component.css'
 })
 export class AdminUserEditComponent implements OnInit{
   user: User | null = null;
+  coupons: Coupon[] = [];
 
-  constructor(private userService: UserService, private route: ActivatedRoute, 
+  nullFirstName: boolean = false;
+  nullLastName: boolean = false;
+  nullEmail: boolean = false;
+
+  constructor(private userService: UserService, private couponService: CouponService, private route: ActivatedRoute, 
     private router: Router) {}
 
   ngOnInit(): void {
     this.fetchUser();
+    this.fetchCoupons();
   }
 
   fetchUser(): void {
@@ -37,14 +45,39 @@ export class AdminUserEditComponent implements OnInit{
     }
   }
 
+  fetchCoupons(): void {
+    this.couponService.getActiveCoupons().subscribe(
+      (coupons: Coupon[]) => {
+        console.log('Coupons:', coupons);
+        this.coupons = coupons;
+      },
+      (error) => {
+        console.error('Error fetching coupons:', error);
+      }
+    );
+  }
+
   saveUser(): void {
     if (this.user) {
+
+      if (!this.validateFields(this.user)) {
+        alert("Error: All fields are required")
+        return;
+      }
 
       this.userService.updateUser(this.user).subscribe(
         () => this.router.navigate(['/admin/user-list']),
         (error) => console.error('Error saving user:', error)
       );
     }
+  }
+
+  validateFields(user: User): boolean {
+    this.nullFirstName = user.firstName === '';
+    this.nullLastName = user.lastName === '';
+    this.nullEmail = user.email === '';
+
+    return !this.nullFirstName && !this.nullLastName && !this.nullEmail;
   }
 
   cancel(): void {

@@ -63,14 +63,14 @@ public class UserController {
 
     @PutMapping("/update")
     @PreAuthorize("hasRole('ADMIN')")
-    public User updateUser(@RequestBody UserDto userDto) {
+    public UserDto updateUser(@RequestBody UserDto userDto) {
         User foundUser = userService.getById(userDto.getId());
 
         if (foundUser == null) {
             System.out.println("User with id " + userDto.getId() + " not found");
             return null;
         } else {
-            return userService.saveUser(userDto);
+            return new UserDto(userService.saveUser(userDto));
         }
     }
 

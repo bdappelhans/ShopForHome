@@ -10,6 +10,7 @@ import { AdminProductEditComponent } from './admin-product-edit/admin-product-ed
 import { AdminProductAddComponent } from './admin-product-add/admin-product-add.component';
 import { AdminUserListComponent } from './admin-user-list/admin-user-list.component';
 import { AdminUserEditComponent } from './admin-user-edit/admin-user-edit.component';
+import { AdminUserAddComponent } from './admin-user-add/admin-user-add.component';
 
 export const routes: Routes = [
     { path: 'login', component: LoginComponent },
@@ -20,6 +21,7 @@ export const routes: Routes = [
         { path: 'product-add', component: AdminProductAddComponent },
         { path: 'user-list', component: AdminUserListComponent },
         { path: 'user-edit/:userId', component: AdminUserEditComponent },
+        { path: 'user-add', component: AdminUserAddComponent },
         { path: '', redirectTo: 'product-list', pathMatch: 'full' }
     ] },
     { path: 'user', component: UserComponent, canActivate: [UserGuard] },

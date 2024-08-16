@@ -1,1 +1,32 @@
-<p>admin-user-add works!</p>
+<div class="edit-element-container">
+    <div class="edit-element-form">
+    <h1>Register New User</h1>
+      <form *ngIf="user" (ngSubmit)="saveUser()">
+        <table>
+          <tbody>
+            <tr>
+              <td class="edit-label"><label for="firstName">First Name:</label></td>
+              <td><input id="firstName" type="text" [(ngModel)]="user.firstName" name="firstName" required autocomplete="off"/></td>
+            </tr>
+            <tr>
+              <td class="edit-label"><label for="lastName">Last Name:</label></td>
+              <td><input id="lastName" type="text" [(ngModel)]="user.lastName" name="lastName" required autocomplete="off"/></td>
+            </tr>
+            <tr>
+              <td class="edit-label"><label for="email">Email:</label></td>
+              <td><input id="email" type="text" [(ngModel)]="user.email" name="email" required autocomplete="off"/></td>
+            </tr>
+            <tr>
+                <td class="edit-label"><label for="password">Password:</label></td>
+                <td><input id="password" type="password" [(ngModel)]="user.password" name="password" required autocomplete="off"/></td>
+            </tr>
+          </tbody>
+        </table>
+            <div class="button-container">
+                <button class="edit-button" type="submit">Register User</button>
+                <button class="edit-button" type="button" (click)="cancel()">Cancel</button>
+            </div>
+      </form>
+    </div>
+</div>
+  

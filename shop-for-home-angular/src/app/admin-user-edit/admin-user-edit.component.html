@@ -17,6 +17,17 @@
               <td><input id="email" type="text" [(ngModel)]="user.email" name="email" required /></td>
             </tr>
             <tr>
+                <td class="edit-label"><label for="coupon">Coupon:</label></td>
+                <td>
+                  <select id="coupon" [(ngModel)]="user.coupon" name="coupon">
+                    <option [ngValue]="null">None</option>
+                    <option *ngFor="let coupon of coupons" [ngValue]="coupon">
+                      {{ coupon.discount }}% off
+                    </option>
+                  </select>
+                </td>
+            </tr>
+            <tr>
               <td class="edit-label"><label for="active">Status:</label></td>
               <td>
                 <input id="active" type="checkbox" [(ngModel)]="user.active" name="active" />
