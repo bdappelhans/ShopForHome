@@ -36,6 +36,20 @@ export class AdminProductEditComponent implements OnInit{
     }
   }
 
+  // Method to handle stock change
+  onStockChange() {
+    if (this.product != null && this.product.stock < 0) {
+      this.product.stock = 0;
+    }
+  }
+
+    // Method to handle price change
+    onPriceChange() {
+      if (this.product != null && this.product.price < 0.01) {
+        this.product.price = 0.01;
+      }
+    }
+
   saveProduct(): void {
     if (this.product) {
       if (this.product.active && this.product.stock < 1) {

@@ -10,12 +10,16 @@
             </tr>
             <tr>
               <td class="edit-label"><label for="stock">Stock:</label></td>
-              <td><input id="stock" type="number" [(ngModel)]="product.stock" name="stock" required /></td>
+              <td><input id="stock" type="number" [(ngModel)]="product.stock" name="stock" required min="0" (ngModelChange)="onStockChange()"/></td>
             </tr>
             <tr>
               <td class="edit-label"><label for="price">Price:</label></td>
-              <td><input id="price" type="number" [(ngModel)]="product.price" name="price" required step="0.01" /></td>
+              <td><input id="price" type="number" [(ngModel)]="product.price" name="price" required step="0.01" min="0.01" (ngModelChange)="onPriceChange()"/></td>
             </tr>
+            <tr>
+                <td class="edit-label"><label for="imageUrl">Image URL:</label></td>
+                <td><input id="imageUrl" type="text" [(ngModel)]="product.imageUrl" name="imageUrl" required /></td>
+              </tr>
             <tr>
               <td class="edit-label"><label for="active">Status:</label></td>
               <td>
@@ -26,8 +30,8 @@
           </tbody>
         </table>
             <div class="button-container">
-            <button class="edit-button" type="submit">Save</button>
-            <button class="edit-button" type="button" (click)="cancel()">Cancel</button>
+                <button class="edit-button" type="submit">Save</button>
+                <button class="edit-button" type="button" (click)="cancel()">Cancel</button>
             </div>
       </form>
     </div>
