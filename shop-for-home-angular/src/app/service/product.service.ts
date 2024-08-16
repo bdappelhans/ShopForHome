@@ -31,4 +31,9 @@ export class ProductService {
     const url = `${this.productApiUrl}/update`;
     return this.http.put<Product>(url, product, this.httpOptions);
   }
+
+  addProduct(product: Product): Observable<Product> {
+    const url = `${this.productApiUrl}/add`;
+    return this.http.post<Product>(url, product, this.httpOptions);
+  }
 }

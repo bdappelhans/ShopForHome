@@ -1,5 +1,10 @@
 <div class="container">
-    <h1>Products</h1>
+    <div class="table-header">
+        <h1 class="products-header">Products</h1>
+        <div class="add-product-button-container">
+            <button (click)="addProduct()">Add New Product</button>
+        </div>
+    </div>
         <table class="list-table" *ngIf="products.length > 0; else noProducts">
             <thead>
                 <tr>

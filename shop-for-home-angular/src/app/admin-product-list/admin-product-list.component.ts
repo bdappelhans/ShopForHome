@@ -57,4 +57,8 @@ export class AdminProductListComponent implements OnInit {
   editProduct(productId: number): void {
     this.router.navigate(['/admin/product-edit', productId]);
   }
+
+  addProduct(): void {
+    this.router.navigate(['/admin/product-add'])
+  }
 }
