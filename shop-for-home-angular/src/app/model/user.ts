@@ -6,7 +6,6 @@ export interface User {
     email: string,
     firstName: string,
     lastName: string,
-    password: string,
     admin: boolean,
     address: Address | null,
     coupon: Coupon | null,

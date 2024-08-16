@@ -21,15 +21,15 @@ export class UserService {
     return this.http.get<User>(url);
   }
 
+  getUserById(id: number) {
+    const url = `${this.userApiUrl}/id/${id}`;
+    return this.http.get<User>(url);
+  }
+
   getAllUsers() {
     const url = `${this.userApiUrl}/all`;
     return this.http.get<User[]>(url);
   }
-
-  addUser(user: User) {
-    const url = `${this.userApiUrl}/add`;
-    return this.http.post<User>(url, user, this.httpOptions);
-  }  
 
   updateUser(user: User): Observable<User> {
     const url = `${this.userApiUrl}/update`;

@@ -2,6 +2,7 @@ package com.cogent.shop_for_home_spring_boot.dto;
 
 import com.cogent.shop_for_home_spring_boot.entity.Address;
 import com.cogent.shop_for_home_spring_boot.entity.Coupon;
+import com.cogent.shop_for_home_spring_boot.entity.User;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
@@ -15,6 +16,20 @@ public class UserDto {
     private Address address;
     private Coupon coupon;
     private boolean isActive;
+
+    public UserDto() {
+    }
+
+    public UserDto(User user) {
+        this.id = user.getId();
+        this.email = user.getEmail();
+        this.firstName = user.getFirstName();
+        this.lastName = user.getLastName();
+        this.isAdmin = user.isAdmin();
+        this.address = user.getAddress();
+        this.coupon = user.getCoupon();
+        this.isActive = user.isActive();
+    }
 
     public Long getId() {
         return id;

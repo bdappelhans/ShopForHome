@@ -1,0 +1,46 @@
+/* Table styling */
+
+.edit-element-form {
+    width: 50%;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+/* Table headers and cells */
+td {
+    padding: 12px;
+    border-bottom: 1px solid #ddd;
+    font-size: 16px;
+}
+
+/* Input field styling */
+input[type="text"],
+input[type="number"],
+select {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    margin-top: 8px;
+    margin-bottom: 16px;
+}
+
+.edit-button {
+    margin: 15px;
+}
+
+.edit-element-container {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin: 15px;
+}
+
+.edit-label {
+    width: 15%;
+}

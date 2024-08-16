@@ -6,6 +6,7 @@ import com.cogent.shop_for_home_spring_boot.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -15,8 +16,16 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
 
     @Override
-    public List<User> getAllUsers() {
-        return userRepository.findByIsAdminFalse();
+    public List<UserDto> getAllUsers() {
+        List<User> users = userRepository.findByIsAdminFalse();
+        List<UserDto> userDtos = new ArrayList<>();
+
+        for (User user : users) {
+            UserDto userDto = new UserDto(user);
+            userDtos.add(userDto);
+        }
+
+        return userDtos;
     }
 
     @Override
@@ -32,6 +41,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User saveUser(UserDto userDto) {
         User user = getById(userDto.getId());
+        user.setId(userDto.getId());
         user.setEmail(userDto.getEmail());
         user.setFirstName(userDto.getFirstName());
         user.setLastName(userDto.getLastName());

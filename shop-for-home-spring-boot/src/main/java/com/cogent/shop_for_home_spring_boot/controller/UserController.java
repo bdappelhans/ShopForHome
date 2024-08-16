@@ -33,7 +33,7 @@ public class UserController {
 
     @GetMapping("/all")
     @PreAuthorize("hasRole('ADMIN')")
-    public List<User> getAllUsers() {
+    public List<UserDto> getAllUsers() {
         return userService.getAllUsers();
     }
 
@@ -50,14 +50,15 @@ public class UserController {
 
     @GetMapping("/id/{userId}")
     @PreAuthorize("hasRole('ADMIN')")
-    public User getUserById(@PathVariable Long userId) {
+    public UserDto getUserById(@PathVariable Long userId) {
         User foundUser = userService.getById(userId);
 
         if (foundUser == null) {
             System.out.println("User with id " + userId + " not found");
+            return null;
+        } else {
+            return new UserDto(foundUser);
         }
-
-        return foundUser;
     }
 
     @PutMapping("/update")
