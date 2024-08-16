@@ -21,4 +21,14 @@ export class ProductService {
     const url = `${this.productApiUrl}/all`;
     return this.http.get<Product[]>(url);
   }
+
+  getProductById(productId: number): Observable<Product> {
+    const url = `${this.productApiUrl}/${productId}`;
+    return this.http.get<Product>(url);
+  }
+
+  updateProduct(product: Product): Observable<Product> {
+    const url = `${this.productApiUrl}/update`;
+    return this.http.put<Product>(url, product, this.httpOptions);
+  }
 }

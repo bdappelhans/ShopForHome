@@ -1,0 +1,38 @@
+<div class="edit-product-container">
+    <div class="edit-product-form">
+    <h1>Edit Product</h1>
+      <form *ngIf="product" (ngSubmit)="saveProduct()">
+        <table>
+          <tbody>
+            <tr>
+              <td class="edit-label"><label for="description">Description:</label></td>
+              <td><input id="description" type="text" [(ngModel)]="product.description" name="description" required /></td>
+            </tr>
+            <tr>
+              <td class="edit-label"><label for="stock">Stock:</label></td>
+              <td><input id="stock" type="number" [(ngModel)]="product.stock" name="stock" required /></td>
+            </tr>
+            <tr>
+              <td class="edit-label"><label for="price">Price:</label></td>
+              <td><input id="price" type="number" [(ngModel)]="product.price" name="price" required step="0.01" /></td>
+            </tr>
+            <tr>
+              <td class="edit-label"><label for="active">Status:</label></td>
+              <td>
+                <input id="active" type="checkbox" [(ngModel)]="product.active" name="active" />
+                <label for="active">{{ product.active ? 'Active' : 'Inactive' }}</label>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+            <div class="button-container">
+            <button class="edit-button" type="submit">Save</button>
+            <button class="edit-button" type="button" (click)="cancel()">Cancel</button>
+            </div>
+      </form>
+    </div>
+      <div *ngIf="product != null" class="product-image-container">
+        <img *ngIf="product.imageUrl" [src]="product.imageUrl" alt="Product Image" class="product-image" />
+      </div>
+</div>
+  

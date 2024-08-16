@@ -34,4 +34,27 @@ export class AdminProductListComponent implements OnInit {
       }
     );
   }
+
+  changeProductStatus(product: Product): void {
+    if (product.active) {
+      product.active = false;
+    } else {
+      if (product.stock < 1) {
+        alert('Error: Product can\'t be active if its current stock is 0. Update stock to activate.')
+        return;
+      }
+      product.active = true;
+    }
+
+    this.productService.updateProduct(product).subscribe(updatedProduct => {
+      const index = this.products.findIndex(e => e.id === updatedProduct.id);
+      if (index !== -1) {
+        this.products[index] = updatedProduct;
+      }
+    });
+  }
+
+  editProduct(productId: number): void {
+    this.router.navigate(['/admin/product-edit', productId]);
+  }
 }

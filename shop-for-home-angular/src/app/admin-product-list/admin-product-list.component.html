@@ -21,8 +21,8 @@
                     <td>{{ product.stock }}</td>
                     <td>{{ product.active ? 'Active' : 'Inactive' }}</td>
                     <td>
-                        <button>{{ product.active ? 'Deactivate' : 'Activate' }}</button>
-                        <button>Edit</button>
+                        <button (click)="changeProductStatus(product)">{{ product.active ? 'Deactivate' : 'Activate' }}</button>
+                        <button (click)="editProduct(product.id)">Edit</button>
                     </td>
                 </tr>
             </tbody>
