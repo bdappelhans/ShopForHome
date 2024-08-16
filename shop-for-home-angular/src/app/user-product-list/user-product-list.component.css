@@ -1,0 +1,23 @@
+.product-image {
+    max-width: 100px; /* Adjust size as needed */
+    max-height: 100px; /* Adjust size as needed */
+    object-fit: cover; /* Ensure the image covers the area without distortion */
+}
+
+.table-header {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.table-list-header {
+    grid-column: 2 / 3;
+    text-align: center;
+}
+
+.add-element-button-container {
+    grid-column: 3 / 4;
+    text-align: right;
+}

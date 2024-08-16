@@ -5,6 +5,7 @@ import com.cogent.shop_for_home_spring_boot.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Service
@@ -56,6 +57,13 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Order createOrder(Order order) {
+        order.setId(0L);
+        order.setOrderDate(null);
+        order.setCoupon(null);
+        order.setInitialTotal(BigDecimal.ZERO);
+        order.setDiscount(BigDecimal.ZERO);
+        order.setFinalTotal(BigDecimal.ZERO);
+        order.setPlaced(false);
         return orderRepository.save(order);
     }
 

@@ -11,6 +11,7 @@ import { AdminProductAddComponent } from './admin-product-add/admin-product-add.
 import { AdminUserListComponent } from './admin-user-list/admin-user-list.component';
 import { AdminUserEditComponent } from './admin-user-edit/admin-user-edit.component';
 import { AdminUserAddComponent } from './admin-user-add/admin-user-add.component';
+import { UserProductListComponent } from './user-product-list/user-product-list.component';
 
 export const routes: Routes = [
     { path: 'login', component: LoginComponent },
@@ -24,7 +25,10 @@ export const routes: Routes = [
         { path: 'user-add', component: AdminUserAddComponent },
         { path: '', redirectTo: 'product-list', pathMatch: 'full' }
     ] },
-    { path: 'user', component: UserComponent, canActivate: [UserGuard] },
+    { path: 'user', component: UserComponent, canActivate: [UserGuard], children: [
+        { path: 'shop', component: UserProductListComponent },
+        { path: '', redirectTo: 'shop', pathMatch: 'full' }
+    ] },
     { path: '', redirectTo: '/login', pathMatch: 'full' },
     { path: '**', redirectTo: '/login' }
 ];
