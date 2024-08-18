@@ -1,4 +1,5 @@
 import { Coupon } from "./coupon";
+import { OrderProduct } from "./order-product";
 import { User } from "./user";
 
 export interface Order {
@@ -9,5 +10,6 @@ export interface Order {
     initialTotal: number,
     discount: number,
     finalTotal: number,
-    placed: boolean
+    placed: boolean,
+    orderProducts: OrderProduct[]
 }

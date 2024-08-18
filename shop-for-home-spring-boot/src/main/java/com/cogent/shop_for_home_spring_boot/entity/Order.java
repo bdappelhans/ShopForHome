@@ -39,8 +39,8 @@ public class Order {
     @Column(name = "is_placed")
     private Boolean isPlaced;
 
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<OrderProduct> orderProducts = new ArrayList<>();
+    @OneToMany(mappedBy = "id.orderId", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<OrderProduct> orderProducts;
 
     public Long getId() {
         return id;

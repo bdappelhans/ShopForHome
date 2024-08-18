@@ -15,14 +15,16 @@ public class OrderProductId implements Serializable {
     @Column(name = "product_id")
     private Long productId;
 
-    public OrderProductId() {
-    }
+    // Default constructor
+    public OrderProductId() {}
 
+    // Parameterized constructor
     public OrderProductId(Long orderId, Long productId) {
         this.orderId = orderId;
         this.productId = productId;
     }
 
+    // Getters and setters
     public Long getOrderId() {
         return orderId;
     }

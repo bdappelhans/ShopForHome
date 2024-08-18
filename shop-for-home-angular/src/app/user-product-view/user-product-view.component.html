@@ -1,5 +1,6 @@
 <div class="element-container" *ngIf="product != null && orderProduct != null">
     <div class="element-form">
+    <form (ngSubmit)="addToCart()">
     <h1>{{ product.description }}</h1>
         <table>
           <tbody>
@@ -15,15 +16,16 @@
             <tr>
             <td class="edit-label"><label for="quantity">Quantity:</label></td>
             <td>
-              <input type="number" id="quantity" [(ngModel)]="orderProduct.quantity" [min]="1" [max]="product.stock" />
+              <input type="number" id="quantity" name="quantity" [(ngModel)]="orderProduct.quantity" [min]="1" [max]="product.stock" />
             </td>
           </tr>
           </tbody>
         </table>
-            <div class="button-container">
-                <button class="edit-button" type="submit">Save</button>
-                <button class="edit-button" type="button" (click)="cancel()">Cancel</button>
-            </div>
+        <div class="button-container">
+            <button class="edit-button" type="submit">Add to Cart</button>
+            <button class="edit-button" type="button" (click)="cancel()">Cancel</button>
+        </div>
+    </form>
     </div>
       <div *ngIf="product != null" class="product-image-container">
         <img *ngIf="product.imageUrl" [src]="product.imageUrl" alt="Product Image" class="product-image" />

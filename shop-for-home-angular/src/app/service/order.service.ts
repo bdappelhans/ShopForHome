@@ -4,6 +4,7 @@ import { API_BASE_URL } from "./api-base";
 import { Observable, of, switchMap } from "rxjs";
 import { Product } from "../model/product";
 import { Order } from "../model/order";
+import { stringify } from 'flatted';
 
 @Injectable({
     providedIn: 'root'
@@ -36,12 +37,12 @@ export class OrderService {
     return this.http.post<Order>(`${this.orderApiUrl}/create`, newOrder);
   }
 
-/*
-  updateProduct(product: Product): Observable<Product> {
-    const url = `${this.productApiUrl}/update`;
-    return this.http.put<Product>(url, product, this.httpOptions);
-  }
 
+  updateOrder(order: Order): Observable<Order> {
+    const url = `${this.orderApiUrl}/update`;
+    return this.http.put<Order>(url, order, this.httpOptions);
+  }
+/*
   addProduct(product: Product): Observable<Product> {
     const url = `${this.productApiUrl}/add`;
     return this.http.post<Product>(url, product, this.httpOptions);

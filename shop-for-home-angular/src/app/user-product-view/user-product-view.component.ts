@@ -32,9 +32,6 @@ export class UserProductViewComponent implements OnInit {
 
   ngOnInit(): void {
     this.fetchUser();
-    this.fetchProduct();
-    this.fetchUnplacedOrder();
-    this.establishOrderProduct();
   }
 
   fetchProduct(): void {
@@ -43,6 +40,7 @@ export class UserProductViewComponent implements OnInit {
       this.productService.getProductById(Number(productId)).subscribe((product) => {
         this.product = product;
         console.log(this.product);
+        this.fetchUnplacedOrder();
       });
     } else {
       this.cancel();
@@ -56,6 +54,7 @@ export class UserProductViewComponent implements OnInit {
       if (userString) {
         this.user = JSON.parse(userString);
         console.log("Retrieved user " + this.user?.id);
+        this.fetchProduct();
       } else {
         console.log("No user found")
       }
@@ -81,7 +80,36 @@ export class UserProductViewComponent implements OnInit {
 
   establishOrderProduct(): void {
     if (this.currentOrder && this.product) {
-      this.orderProduct = { order: this.currentOrder, product: this.product, quantity: 1 };
+      this.orderProduct = {
+        id: {
+          orderId: this.currentOrder.id,
+          productId: this.product.id
+        },
+        quantity: 1
+      };
+      console.log(this.orderProduct);
+    }
+  }
+
+  addToCart() {
+    if (this.currentOrder && this.orderProduct) {
+      if (!this.currentOrder.orderProducts) {
+        this.currentOrder.orderProducts = [];
+      }
+
+      this.currentOrder.orderProducts.push(this.orderProduct);
+
+      this.orderService.updateOrder(this.currentOrder).subscribe(
+        () => {
+          alert("Cart successfully updated!");
+          this.router.navigate(['/user/shop']);
+        },
+        (error) =>  { 
+          console.error('Error updating order:', error);
+        }
+      );
+    } else {
+      console.log("Error adding to cart")
     }
   }
 

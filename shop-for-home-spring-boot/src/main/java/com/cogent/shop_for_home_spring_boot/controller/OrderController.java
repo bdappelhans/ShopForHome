@@ -21,4 +21,10 @@ public class OrderController {
     public Order getUnplacedOrders(@PathVariable Long userId) {
         return orderService.getUnplacedOrderByUserId(userId);
     }
+
+    @PutMapping("/update")
+    public Order updateOrder(@RequestBody Order order) {
+        System.out.println("Attempting to update order " + order.getId());
+        return orderService.updateOrder(order);
+    }
 }

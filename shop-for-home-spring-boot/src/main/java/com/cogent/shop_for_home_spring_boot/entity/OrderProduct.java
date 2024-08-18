@@ -7,41 +7,26 @@ import jakarta.persistence.*;
 public class OrderProduct {
 
     @EmbeddedId
-    private OrderProductId id = new OrderProductId();
+    private OrderProductId id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @MapsId("orderId")
-    private Order order;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @MapsId("productId")
-    private Product product;
-
-    @Column(nullable = false)
+    @Column(name = "quantity")
     private Integer quantity;
 
+    // Constructors
+    public OrderProduct() {}
+
+    public OrderProduct(OrderProductId id, Integer quantity) {
+        this.id = id;
+        this.quantity = quantity;
+    }
+
+    // Getters and Setters
     public OrderProductId getId() {
         return id;
     }
 
     public void setId(OrderProductId id) {
         this.id = id;
-    }
-
-    public Order getOrder() {
-        return order;
-    }
-
-    public void setOrder(Order order) {
-        this.order = order;
-    }
-
-    public Product getProduct() {
-        return product;
-    }
-
-    public void setProduct(Product product) {
-        this.product = product;
     }
 
     public Integer getQuantity() {
