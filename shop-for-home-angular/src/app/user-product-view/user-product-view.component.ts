@@ -25,6 +25,8 @@ export class UserProductViewComponent implements OnInit {
   user: User | null = null;
   currentOrder: Order | null = null;
   orderProduct : OrderProduct | null = null;
+  orderProductIdx: number = -1; // updated to index of orderProduct in current order if already present
+  cartButtonText: string = "Add to Cart"; // form submission text, changed if product already present in user order
 
   constructor(private productService: ProductService, private authService: AuthService, private orderService: OrderService, private router: Router,
     private route: ActivatedRoute,
@@ -80,25 +82,49 @@ export class UserProductViewComponent implements OnInit {
 
   establishOrderProduct(): void {
     if (this.currentOrder && this.product) {
-      this.orderProduct = {
-        id: {
-          orderId: this.currentOrder.id,
-          productId: this.product.id
-        },
-        quantity: 1
-      };
+      this.orderProductIdx = this.findOrderProductIndex(this.product.id);
+
+      if (this.orderProductIdx != -1) {
+        this.orderProduct = this.currentOrder.orderProducts[this.orderProductIdx];
+        this.cartButtonText = "Update Cart";
+      } else {
+        this.orderProduct = {
+          id: {
+            orderId: this.currentOrder.id,
+            productId: this.product.id
+          },
+          quantity: 1
+        };
+      }
       console.log(this.orderProduct);
     }
   }
 
-  addToCart() {
+  findOrderProductIndex(productId: number): number {
+    return this.currentOrder?.orderProducts.findIndex(op => op.id.productId === productId) ?? -1;
+  }
+  
+  saveCart(): void {
     if (this.currentOrder && this.orderProduct) {
       if (!this.currentOrder.orderProducts) {
         this.currentOrder.orderProducts = [];
       }
 
-      this.currentOrder.orderProducts.push(this.orderProduct);
+      if (this.orderProductIdx !== -1) { // if product already present, update element in array
+        this.currentOrder.orderProducts[this.orderProductIdx] = this.orderProduct;
+      } else { // if product not already present, push element into array
+        this.currentOrder.orderProducts.push(this.orderProduct);
+      }
 
+      this.updateOrder();
+    } else {
+      console.log("Error adding to cart")
+    }
+  }
+
+  updateOrder(): void {
+    if (this.currentOrder) {
+      // update order through API
       this.orderService.updateOrder(this.currentOrder).subscribe(
         () => {
           alert("Cart successfully updated!");
@@ -108,8 +134,14 @@ export class UserProductViewComponent implements OnInit {
           console.error('Error updating order:', error);
         }
       );
-    } else {
-      console.log("Error adding to cart")
+    }
+  }
+
+  removeItem(): void {
+    if (this.currentOrder && this.product && this.orderProductIdx !== -1) {
+      this.currentOrder.orderProducts.splice(this.orderProductIdx, 1);
+      console.log("Removed product ID " + this.product.id + " from order " + this.currentOrder.id);
+      this.updateOrder();
     }
   }
 

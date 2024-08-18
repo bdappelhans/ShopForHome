@@ -1,6 +1,6 @@
 <div class="element-container" *ngIf="product != null && orderProduct != null">
     <div class="element-form">
-    <form (ngSubmit)="addToCart()">
+    <form (ngSubmit)="saveCart()">
     <h1>{{ product.description }}</h1>
         <table>
           <tbody>
@@ -22,8 +22,13 @@
           </tbody>
         </table>
         <div class="button-container">
-            <button class="edit-button" type="submit">Add to Cart</button>
+            <button class="edit-button" type="submit"> {{ cartButtonText }}</button>
+            <button *ngIf="orderProductIdx != -1" class="edit-button" type="button" (click) ="removeItem()">Remove From Cart</button>
             <button class="edit-button" type="button" (click)="cancel()">Cancel</button>
+        </div>
+        <div *ngIf="orderProductIdx != -1">
+          <p>This item is already in your cart. Press the Update button to update the quantity or the Remove button to remove it from your cart.
+          </p>
         </div>
     </form>
     </div>
