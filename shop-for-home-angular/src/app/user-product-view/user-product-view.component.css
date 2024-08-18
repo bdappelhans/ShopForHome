@@ -1,6 +1,6 @@
 /* Table styling */
 
-.edit-product-form {
+.element-form {
     width: 50%;
 }
 table {
@@ -34,18 +34,12 @@ select {
     margin: 15px;
 }
 
-.edit-product-container {
+.element-container {
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
     margin: 15px;
 }
-
-.form-image-container {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-  }
 
 .edit-label {
     width: 15%;
@@ -59,10 +53,10 @@ select {
 }
 
 
-.product-image-container {
-width: 50%;
-align-items: center;
-display: flex;
-flex-direction: column;
-padding-top: 30px;
-}
+  .product-image-container {
+    width: 50%;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    padding-top: 30px;
+  }

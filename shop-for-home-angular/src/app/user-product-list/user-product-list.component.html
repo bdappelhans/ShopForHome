@@ -10,6 +10,7 @@
                     <th>Description</th>
                     <th>Price</th>
                     <th>Stock</th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -19,6 +20,9 @@
                     <td>{{ product.description }}</td>
                     <td>{{ product.price }}</td>
                     <td>{{ product.stock }}</td>
+                    <td>
+                        <button (click)="viewProduct(product.id)">View</button>
+                    </td>
                 </tr>
             </tbody>
         </table>

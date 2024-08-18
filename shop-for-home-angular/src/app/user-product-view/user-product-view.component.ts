@@ -1,46 +1,52 @@
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { RouterModule, RouterOutlet, Router } from '@angular/router';
+import { RouterModule, RouterOutlet, Router, ActivatedRoute } from '@angular/router';
 import { ProductService } from '../service/product.service';
 import { Product } from '../model/product';
 import { Order } from '../model/order';
 import { User } from '../model/user';
 import { AuthService } from '../service/auth.service';
 import { OrderService } from '../service/order.service';
+import { FormsModule } from '@angular/forms';
+import { OrderProduct } from '../model/order-product';
 
 @Component({
   selector: 'app-admin-product-list',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, HttpClientModule, RouterModule],
+  imports: [CommonModule, RouterOutlet, HttpClientModule, RouterModule, FormsModule],
   providers: [ProductService, AuthService, OrderService],
-  templateUrl: './user-product-list.component.html',
-  styleUrls: ['./user-product-list.component.css']
+  templateUrl: './user-product-view.component.html',
+  styleUrls: ['./user-product-view.component.css']
 })
-export class UserProductListComponent implements OnInit {
+export class UserProductViewComponent implements OnInit {
 
-  products: Product[] = [];
+  product: Product | null = null;
   user: User | null = null;
   currentOrder: Order | null = null;
+  orderProduct : OrderProduct | null = null;
 
-  constructor(private productService: ProductService, private authService: AuthService, private orderService: OrderService, private router: Router) {}
+  constructor(private productService: ProductService, private authService: AuthService, private orderService: OrderService, private router: Router,
+    private route: ActivatedRoute,
+  ) {}
 
   ngOnInit(): void {
     this.fetchUser();
-    this.fetchProducts();
+    this.fetchProduct();
     this.fetchUnplacedOrder();
+    this.establishOrderProduct();
   }
 
-  fetchProducts(): void {
-    this.productService.getProducts().subscribe(
-      (products: Product[]) => {
-        console.log('Products:', products);
-        this.products = products;
-      },
-      (error) => {
-        console.error('Error fetching products:', error);
-      }
-    );
+  fetchProduct(): void {
+    const productId = this.route.snapshot.paramMap.get('productId');
+    if (productId) {
+      this.productService.getProductById(Number(productId)).subscribe((product) => {
+        this.product = product;
+        console.log(this.product);
+      });
+    } else {
+      this.cancel();
+    }
   }
 
   fetchUser(): void {
@@ -64,6 +70,7 @@ export class UserProductListComponent implements OnInit {
         (order: Order) => {
           console.log("Unplaced order: ", order);
           this.currentOrder = order;
+          this.establishOrderProduct();
         },
         (error) => {
           console.error('Error fetching order:', error);
@@ -72,7 +79,13 @@ export class UserProductListComponent implements OnInit {
     }
   }
 
-  viewProduct(productId: number): void {
-    this.router.navigate(['/user/shop/product', productId])
+  establishOrderProduct(): void {
+    if (this.currentOrder && this.product) {
+      this.orderProduct = { order: this.currentOrder, product: this.product, quantity: 1 };
+    }
+  }
+
+  cancel(): void {
+    this.router.navigate(['/user/shop']);
   }
 }
