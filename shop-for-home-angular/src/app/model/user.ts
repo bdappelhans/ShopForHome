@@ -1,5 +1,6 @@
 import { Address } from "./address";
 import { Coupon } from "./coupon";
+import { WishList } from "./wish-list";
 
 export interface User {
     id: number,

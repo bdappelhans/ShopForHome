@@ -3,8 +3,12 @@ package com.cogent.shop_for_home_spring_boot.dto;
 import com.cogent.shop_for_home_spring_boot.entity.Address;
 import com.cogent.shop_for_home_spring_boot.entity.Coupon;
 import com.cogent.shop_for_home_spring_boot.entity.User;
+import com.cogent.shop_for_home_spring_boot.entity.WishList;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class UserDto {
 
@@ -16,6 +20,7 @@ public class UserDto {
     private Address address;
     private Coupon coupon;
     private boolean isActive;
+    private List<WishList> wishList = new ArrayList<>();
 
     public UserDto() {
     }
@@ -93,5 +98,28 @@ public class UserDto {
 
     public void setActive(boolean active) {
         isActive = active;
+    }
+
+    public List<WishList> getWishList() {
+        return wishList;
+    }
+
+    public void setWishList(List<WishList> wishList) {
+        this.wishList = wishList;
+    }
+
+    @Override
+    public String toString() {
+        return "UserDto{" +
+                "id=" + id +
+                ", email='" + email + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", isAdmin=" + isAdmin +
+                ", address=" + address +
+                ", coupon=" + coupon +
+                ", isActive=" + isActive +
+                ", wishList=" + wishList +
+                '}';
     }
 }

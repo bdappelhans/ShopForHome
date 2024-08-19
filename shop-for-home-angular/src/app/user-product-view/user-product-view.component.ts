@@ -10,12 +10,14 @@ import { AuthService } from '../service/auth.service';
 import { OrderService } from '../service/order.service';
 import { FormsModule } from '@angular/forms';
 import { OrderProduct } from '../model/order-product';
+import { WishListService } from '../service/wish-list.service';
+import { WishList } from '../model/wish-list';
 
 @Component({
   selector: 'app-admin-product-list',
   standalone: true,
   imports: [CommonModule, RouterOutlet, HttpClientModule, RouterModule, FormsModule],
-  providers: [ProductService, AuthService, OrderService],
+  providers: [ProductService, AuthService, OrderService, WishListService],
   templateUrl: './user-product-view.component.html',
   styleUrls: ['./user-product-view.component.css']
 })
@@ -27,9 +29,10 @@ export class UserProductViewComponent implements OnInit {
   orderProduct : OrderProduct | null = null;
   orderProductIdx: number = -1; // updated to index of orderProduct in current order if already present
   cartButtonText: string = "Add to Cart"; // form submission text, changed if product already present in user order
+  wishItem: WishList | null = null;
 
   constructor(private productService: ProductService, private authService: AuthService, private orderService: OrderService, private router: Router,
-    private route: ActivatedRoute,
+    private route: ActivatedRoute, private wishService: WishListService
   ) {}
 
   ngOnInit(): void {
@@ -43,6 +46,7 @@ export class UserProductViewComponent implements OnInit {
         this.product = product;
         console.log(this.product);
         this.fetchUnplacedOrder();
+        this.fetchWishList();
       });
     } else {
       this.cancel();
@@ -103,6 +107,24 @@ export class UserProductViewComponent implements OnInit {
   findOrderProductIndex(productId: number): number {
     return this.currentOrder?.orderProducts.findIndex(op => op.id.productId === productId) ?? -1;
   }
+
+  fetchWishList(): void {
+    if (this.user && this.product) {
+      this.wishService.getWishListByUserId(this.user.id).subscribe(
+        (wishList: WishList[]) => {
+          console.log('Wish List:', wishList);
+          const wishItem = wishList.find(wishItem => wishItem.id.productId === this.product?.id);
+
+          if (wishItem) {
+            this.wishItem = wishItem;
+          }
+        },
+        (error) => {
+          console.error('Error fetching wish list:', error);
+        }
+      );
+    }
+  }
   
   saveCart(): void {
     if (this.currentOrder && this.orderProduct) {
@@ -142,6 +164,35 @@ export class UserProductViewComponent implements OnInit {
       this.currentOrder.orderProducts.splice(this.orderProductIdx, 1);
       console.log("Removed product ID " + this.product.id + " from order " + this.currentOrder.id);
       this.updateOrder();
+    }
+  }
+
+  removeWishList(): void {
+    if (this.wishItem) {
+      this.wishService.deleteWishItem(this.wishItem).subscribe({
+        next: () => {
+          this.wishItem = null;
+        },
+        error: err => {
+          console.error('Failed to remove wish item:', err);
+        }
+      });
+    }
+  }
+
+  addWishList(): void {
+    if (this.product && this.user) {
+       const wishItem: WishList = { id: { productId: this.product.id, userId: this.user.id } };
+
+       this.wishService.addWishItem(wishItem).subscribe(
+        (response) => {
+          console.log('Wish item added successfully:', response);
+          this.wishItem = response;
+        },
+        (error) => {
+          console.error('Error saving wish item:', error);
+        }
+      );
     }
   }
 

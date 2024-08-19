@@ -24,6 +24,8 @@
         <div class="button-container">
             <button class="edit-button" type="submit"> {{ cartButtonText }}</button>
             <button *ngIf="orderProductIdx != -1" class="edit-button" type="button" (click) ="removeItem()">Remove From Cart</button>
+            <button *ngIf="wishItem != null" class="edit-button" type="button" (click)="removeWishList()">Remove from Wish List</button>
+            <button *ngIf="wishItem == null" class="edit-button" type="button" (click)="addWishList()">Add to Wish List</button>
             <button class="edit-button" type="button" (click)="cancel()">Cancel</button>
         </div>
         <div *ngIf="orderProductIdx != -1">

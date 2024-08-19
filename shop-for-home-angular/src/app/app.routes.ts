@@ -14,6 +14,7 @@ import { AdminUserAddComponent } from './admin-user-add/admin-user-add.component
 import { UserProductListComponent } from './user-product-list/user-product-list.component';
 import { UserProductViewComponent } from './user-product-view/user-product-view.component';
 import { UserCartComponent } from './user-cart/user-cart.component';
+import { UserWishListComponent } from './user-wish-list/user-wish-list.component';
 
 export const routes: Routes = [
     { path: 'login', component: LoginComponent },
@@ -31,6 +32,7 @@ export const routes: Routes = [
         { path: 'shop', component: UserProductListComponent },
         { path: 'shop/product/:productId', component: UserProductViewComponent },
         { path: 'cart', component: UserCartComponent },
+        { path: 'wish-list', component: UserWishListComponent },
         { path: '', redirectTo: 'shop', pathMatch: 'full' }
     ] },
     { path: '', redirectTo: '/login', pathMatch: 'full' },
