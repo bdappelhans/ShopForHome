@@ -115,7 +115,7 @@ export class UserCartComponent implements OnInit {
 
       this.currentOrder.placed = true;
 
-      this.orderService.updateOrder(this.currentOrder).subscribe(
+      this.orderService.placeOrder(this.currentOrder).subscribe(
         (updatedOrder: Order) => {
           console.log("Placing order");
           alert("Order successfully placed!")

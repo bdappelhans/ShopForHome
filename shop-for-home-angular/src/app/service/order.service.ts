@@ -42,6 +42,11 @@ export class OrderService {
     const url = `${this.orderApiUrl}/update`;
     return this.http.put<Order>(url, order, this.httpOptions);
   }
+
+  placeOrder(order: Order): Observable<Order> {
+    const url = `${this.orderApiUrl}/place`;
+    return this.http.put<Order>(url, order, this.httpOptions);
+  }
 /*
   addProduct(product: Product): Observable<Product> {
     const url = `${this.productApiUrl}/add`;
