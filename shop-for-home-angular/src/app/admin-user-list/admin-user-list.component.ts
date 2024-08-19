@@ -26,7 +26,7 @@ export class AdminUserListComponent implements OnInit {
   }
 
   fetchUsers(): void {
-    this.userService.getAllUsers().subscribe(
+    this.userService.getAllActiveUsers().subscribe(
       (users: User[]) => {
         console.log('Users:', users);
         this.users = users;
@@ -47,7 +47,7 @@ export class AdminUserListComponent implements OnInit {
     this.userService.updateUser(user).subscribe(updatedUser => {
       const index = this.users.findIndex(e => e.id === updatedUser.id);
       if (index !== -1) {
-        this.users[index] = updatedUser;
+        this.users.splice(index, 1);
       }
     });
   }

@@ -32,7 +32,7 @@ export class UserProductListComponent implements OnInit {
   }
 
   fetchProducts(): void {
-    this.productService.getProducts().subscribe(
+    this.productService.getActiveProducts().subscribe(
       (products: Product[]) => {
         console.log('Products:', products);
         this.products = products;

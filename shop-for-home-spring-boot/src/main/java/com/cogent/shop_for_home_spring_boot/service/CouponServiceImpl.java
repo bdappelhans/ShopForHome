@@ -46,14 +46,6 @@ public class CouponServiceImpl implements CouponService {
             return null;
         } else {
             if (!coupon.isActive()) { // if coupon is being deactivated
-                // Remove users from the coupon
-                coupon.getUsers().forEach(user -> {
-                    user.setCoupon(null); // Remove the coupon reference from the user
-                    userRepository.save(user); // Save the user with the updated coupon reference
-                });
-
-                // Clear the list of users in the coupon
-                coupon.getUsers().clear();
 
                 // Save the updated coupon
                 couponRepository.save(coupon);

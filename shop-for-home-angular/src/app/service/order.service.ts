@@ -37,7 +37,6 @@ export class OrderService {
     return this.http.post<Order>(`${this.orderApiUrl}/create`, newOrder);
   }
 
-
   updateOrder(order: Order): Observable<Order> {
     const url = `${this.orderApiUrl}/update`;
     return this.http.put<Order>(url, order, this.httpOptions);

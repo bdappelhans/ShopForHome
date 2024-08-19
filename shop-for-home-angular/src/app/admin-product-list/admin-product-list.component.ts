@@ -24,7 +24,7 @@ export class AdminProductListComponent implements OnInit {
   }
 
   fetchProducts(): void {
-    this.productService.getProducts().subscribe(
+    this.productService.getActiveProducts().subscribe(
       (products: Product[]) => {
         console.log('Products:', products);
         this.products = products;

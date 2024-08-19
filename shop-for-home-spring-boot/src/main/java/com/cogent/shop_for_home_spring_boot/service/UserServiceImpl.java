@@ -29,6 +29,19 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public List<UserDto> getAllActiveUsers() {
+        List<User> users = userRepository.findByIsAdminFalseAndIsActiveTrue();
+        List<UserDto> userDtos = new ArrayList<>();
+
+        for (User user : users) {
+            UserDto userDto = new UserDto(user);
+            userDtos.add(userDto);
+        }
+
+        return userDtos;
+    }
+
+    @Override
     public User getById(Long id) {
         return userRepository.findById(id).orElse(null);
     }

@@ -6,7 +6,7 @@
           <tbody>
             <tr>
               <td class="edit-label"><label for="description">Description:</label></td>
-              <td><input id="description" type="text" [(ngModel)]="product.description" name="description" required /></td>
+              <td><input id="description" type="text" autocomplete="off" [(ngModel)]="product.description" name="description" required /></td>
             </tr>
             <tr>
               <td class="edit-label"><label for="stock">Stock:</label></td>
@@ -20,13 +20,6 @@
                 <td class="edit-label"><label for="imageUrl">Image URL:</label></td>
                 <td><input id="imageUrl" type="text" [(ngModel)]="product.imageUrl" name="imageUrl" required /></td>
               </tr>
-            <tr>
-              <td class="edit-label"><label for="active">Status:</label></td>
-              <td>
-                <input id="active" type="checkbox" [(ngModel)]="product.active" name="active" />
-                <label for="active">{{ product.active ? 'Active' : 'Inactive' }}</label>
-              </td>
-            </tr>
           </tbody>
         </table>
             <div class="button-container">

@@ -37,6 +37,12 @@ public class UserController {
         return userService.getAllUsers();
     }
 
+    @GetMapping("/active")
+    @PreAuthorize("hasRole('ADMIN')")
+    public List<UserDto> getActiveUsers() {
+        return userService.getAllActiveUsers();
+    }
+
     @GetMapping("/email/{userEmail}")
     public User getUserByEmail(@PathVariable String userEmail) {
         User foundUser = userService.getByEmail(userEmail);

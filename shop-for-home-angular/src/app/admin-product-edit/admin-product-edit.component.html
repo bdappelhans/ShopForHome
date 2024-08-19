@@ -19,18 +19,12 @@
             <tr>
                 <td class="edit-label"><label for="imageUrl">Image URL:</label></td>
                 <td><input id="imageUrl" type="text" [(ngModel)]="product.imageUrl" name="imageUrl" required /></td>
-              </tr>
-            <tr>
-              <td class="edit-label"><label for="active">Status:</label></td>
-              <td>
-                <input id="active" type="checkbox" [(ngModel)]="product.active" name="active" />
-                <label for="active">{{ product.active ? 'Active' : 'Inactive' }}</label>
-              </td>
             </tr>
           </tbody>
         </table>
             <div class="button-container">
                 <button class="edit-button" type="submit">Save</button>
+                <button class="edit-button" type="button" (click)="remove()">Remove</button>
                 <button class="edit-button" type="button" (click)="cancel()">Cancel</button>
             </div>
       </form>

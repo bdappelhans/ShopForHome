@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "coupons")
@@ -21,11 +22,6 @@ public class Coupon {
 
     @Column(name = "is_active")
     private boolean isActive;
-
-    @OneToMany(mappedBy = "coupon",
-            fetch = FetchType.LAZY)
-    @JsonIgnoreProperties("coupon")
-    private List<User> users = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -51,11 +47,16 @@ public class Coupon {
         isActive = active;
     }
 
-    public List<User> getUsers() {
-        return users;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Coupon coupon = (Coupon) o;
+        return isActive == coupon.isActive && Objects.equals(id, coupon.id) && Objects.equals(discount, coupon.discount);
     }
 
-    public void setUsers(List<User> users) {
-        this.users = users;
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, discount, isActive);
     }
 }

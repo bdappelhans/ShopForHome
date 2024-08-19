@@ -44,14 +44,15 @@ public class OrderController {
         order.setOrderDate(LocalDateTime.now());
 
         // remove coupon from user if used in order
-        User orderUser = userService.getById(order.getId());
+        User orderUser = userService.getById(order.getUserId());
         if (orderUser != null) {
+
             if (orderUser.getCoupon().getId().equals(order.getCoupon().getId())) {
+                System.out.println("Removing coupon from user " + orderUser.getId());
                 orderUser.setCoupon(null);
                 userService.saveUser(new UserDto(orderUser));
             }
         }
-
         return orderService.updateOrder(order);
     }
 }

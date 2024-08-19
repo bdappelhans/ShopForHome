@@ -24,7 +24,7 @@
                     <td>{{ user.coupon ? user.coupon.discount + '% off' : 'None' }}</td>
                     <td>{{ user.active ? 'Active' : 'Inactive' }}</td>
                     <td>
-                        <button (click)="changeUserStatus(user)">{{ user.active ? 'Deactivate' : 'Activate' }}</button>
+                        <button (click)="changeUserStatus(user)">Remove</button>
                         <button (click)="editUser(user.id)">Edit</button>
                     </td>
                 </tr>

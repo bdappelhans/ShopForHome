@@ -31,6 +31,11 @@ export class UserService {
     return this.http.get<User[]>(url);
   }
 
+  getAllActiveUsers() {
+    const url = `${this.userApiUrl}/active`;
+    return this.http.get<User[]>(url);
+  }
+
   updateUser(user: User): Observable<User> {
     const url = `${this.userApiUrl}/update`;
     return this.http.put<User>(url, user, this.httpOptions);

@@ -39,15 +39,13 @@ export class AdminProductAddComponent implements OnInit{
 
   saveProduct(): void {
     if (this.product) {
-      if (this.product.active && this.product.stock < 1) {
-        alert("Error: Unable to set product to active with a stock of 0")
-        return;
-      }
 
       if (this.product.description === '') {
         alert("Error: Description is required");
         return;
       }
+
+      this.product.active = true;
 
       this.productService.addProduct(this.product).subscribe(
         () => this.router.navigate(['/admin/product-list']),

@@ -30,7 +30,6 @@ export class AdminUserEditComponent implements OnInit{
 
   ngOnInit(): void {
     this.fetchUser();
-    this.fetchCoupons();
   }
 
   fetchUser(): void {
@@ -39,6 +38,7 @@ export class AdminUserEditComponent implements OnInit{
       this.userService.getUserById(Number(userId)).subscribe((user) => {
         this.user = user;
         console.log(this.user);
+        this.fetchCoupons();
       });
     } else {
       this.cancel();
@@ -50,11 +50,22 @@ export class AdminUserEditComponent implements OnInit{
       (coupons: Coupon[]) => {
         console.log('Coupons:', coupons);
         this.coupons = coupons;
+        this.assignCoupon();
       },
       (error) => {
         console.error('Error fetching coupons:', error);
       }
     );
+  }
+
+  assignCoupon(): void {
+    if (this.user && this.coupons && this.user.coupon) {
+      const couponIndex = this.coupons.findIndex(coupon => coupon.id === this.user?.coupon?.id);
+
+      if (couponIndex !== -1) {
+        this.user.coupon = this.coupons[couponIndex];
+      }
+    }
   }
 
   saveUser(): void {
@@ -64,6 +75,9 @@ export class AdminUserEditComponent implements OnInit{
         alert("Error: All fields are required")
         return;
       }
+
+      console.log("Attempting to save user:");
+      console.log(this.user);
 
       this.userService.updateUser(this.user).subscribe(
         () => this.router.navigate(['/admin/user-list']),

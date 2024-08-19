@@ -22,6 +22,11 @@ export class ProductService {
     return this.http.get<Product[]>(url);
   }
 
+  getActiveProducts(): Observable<Product[]> {
+    const url = `${this.productApiUrl}/active`;
+    return this.http.get<Product[]>(url);
+  }
+
   getProductById(productId: number): Observable<Product> {
     const url = `${this.productApiUrl}/${productId}`;
     return this.http.get<Product>(url);

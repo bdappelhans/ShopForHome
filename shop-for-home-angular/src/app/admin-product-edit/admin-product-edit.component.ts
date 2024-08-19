@@ -52,15 +52,22 @@ export class AdminProductEditComponent implements OnInit{
 
   saveProduct(): void {
     if (this.product) {
-      if (this.product.active && this.product.stock < 1) {
-        alert("Error: Unable to set product to active with a stock of 0")
-        return;
-      }
 
       if (this.product.description === '') {
         alert("Error: Description is required");
         return;
       }
+
+      this.productService.updateProduct(this.product).subscribe(
+        () => this.router.navigate(['/admin/product-list']),
+        (error) => console.error('Error saving product:', error)
+      );
+    }
+  }
+
+  remove(): void {
+    if (this.product) {
+      this.product.active = false;
 
       this.productService.updateProduct(this.product).subscribe(
         () => this.router.navigate(['/admin/product-list']),

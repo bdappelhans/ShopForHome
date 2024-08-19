@@ -9,6 +9,8 @@ public interface UserService {
 
     List<UserDto> getAllUsers();
 
+    List<UserDto> getAllActiveUsers();
+
     User getById(Long id);
 
     User getByEmail(String email);
