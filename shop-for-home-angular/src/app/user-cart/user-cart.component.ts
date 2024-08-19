@@ -8,6 +8,9 @@ import { Order } from '../model/order';
 import { User } from '../model/user';
 import { AuthService } from '../service/auth.service';
 import { OrderService } from '../service/order.service';
+import { CartItem } from '../model/cart-item';
+import { OrderProduct } from '../model/order-product';
+import { Coupon } from '../model/coupon';
 
 @Component({
   selector: 'app-admin-product-list',
@@ -19,43 +22,45 @@ import { OrderService } from '../service/order.service';
 })
 export class UserCartComponent implements OnInit {
 
-  products: Product[] = [];
+  cartItems: CartItem[] = [];
   user: User | null = null;
   currentOrder: Order | null = null;
+  currentUserCoupon: Coupon | null = null;
 
   constructor(private productService: ProductService, private authService: AuthService, private orderService: OrderService, private router: Router) {}
 
   ngOnInit(): void {
     this.fetchUser();
-    this.fetchProducts();
-    this.fetchUnplacedOrder();
   }
 
-  fetchProducts(): void {
-    this.productService.getProducts().subscribe(
-      (products: Product[]) => {
-        console.log('Products:', products);
-        this.products = products;
-      },
-      (error) => {
-        console.error('Error fetching products:', error);
+  fetchCartItems(): void {
+    if (this.currentOrder?.orderProducts) {
+
+      for (const op of this.currentOrder.orderProducts) {
+        this.productService.getProductById(op.id.productId).subscribe(
+          (product: Product) => {
+            // set quantity and total item price variables, create new cartItem from information
+            const quantity: number = op.quantity;
+            const itemTotal: number = op.quantity * product.price;
+            const cartItem: CartItem = { product: product, quantity: quantity, totalItemPrice: itemTotal };
+
+            // push cartItem into array
+            this.cartItems.push(cartItem);
+          },
+          (error) => {
+            console.error('Error fetching product:', error)
+          }
+        )
       }
-    );
+      console.log("Cart Items: ", this.cartItems);
+    }
   }
 
   fetchUser(): void {
-    if (typeof window !== 'undefined') {
-      const userString = localStorage.getItem('user');
-
-      if (userString) {
-        this.user = JSON.parse(userString);
-        console.log("Retrieved user " + this.user?.id);
-      } else {
-        console.log("No user found")
-      }
-     } else {
-      console.error('localStorage is not available')
-    }
+    this.authService.fetchUserDetails().subscribe(user => {
+      this.user = user;
+      this.fetchUnplacedOrder();
+    });
   }
 
   fetchUnplacedOrder(): void {
@@ -64,9 +69,75 @@ export class UserCartComponent implements OnInit {
         (order: Order) => {
           console.log("Unplaced order: ", order);
           this.currentOrder = order;
+          this.fetchCartItems();
+          this.checkCouponCompatibility();
         },
         (error) => {
           console.error('Error fetching order:', error);
+        }
+      );
+    }
+  }
+
+  checkCouponCompatibility(): void {
+    if (this.user && this.currentOrder) {
+      if (!this.user.coupon && this.currentOrder.coupon) {
+        this.currentOrder.coupon = null;
+        this.updateOrderRefresh();
+      } else if ((this.user.coupon && this.currentOrder.coupon) && (this.user.coupon.id != this.currentOrder.coupon.id)) {
+        this.currentOrder.coupon = null;
+        this.updateOrderRefresh();
+      }
+    }
+  }
+
+  applyCoupon(): void {
+    if (this.user && this.currentOrder && this.user.coupon) {
+      this.currentOrder.coupon = this.user.coupon;
+      this.updateOrderRefresh();
+    }
+  }
+
+  placeOrder(): void {
+    if (this.cartItems && this.currentOrder) {
+      for (let cartItem of this.cartItems) {
+        let updatedProduct: Product = cartItem.product;
+        // Subtract cartItem quantity from product stock
+        updatedProduct.stock -= cartItem.quantity;
+  
+        this.productService.updateProduct(updatedProduct).subscribe(
+          (response) => {
+            console.log('Product updated successfully:', response);
+          },
+          (error) => console.error('Error saving product:', error)
+        );
+      }
+
+      this.currentOrder.placed = true;
+
+      this.orderService.updateOrder(this.currentOrder).subscribe(
+        (updatedOrder: Order) => {
+          console.log("Placing order");
+          alert("Order successfully placed!")
+          this.router.navigate(['/user/shop'])
+        },
+        (error) =>  { 
+          console.error('Error updating order:', error);
+        }
+      );
+    }
+  }
+
+  updateOrderRefresh(): void {
+    if (this.currentOrder) {
+      // update order through API
+      this.orderService.updateOrder(this.currentOrder).subscribe(
+        (updatedOrder: Order) => {
+          console.log("Updating order");
+          this.currentOrder = updatedOrder;
+        },
+        (error) =>  { 
+          console.error('Error updating order:', error);
         }
       );
     }

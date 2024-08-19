@@ -1,33 +1,65 @@
-<div class="container">
+<div class="container" *ngIf="user && currentOrder && cartItems.length > 0; else noCartItems">
     <div class="table-header">
         <h1 class="table-list-header">Cart</h1>
     </div>
-        <table class="list-table" *ngIf="products.length > 0; else noProducts">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Image</th>
-                    <th>Description</th>
-                    <th>Price</th>
-                    <th>Stock</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let product of products">
-                    <td>{{ product.id }}</td>
-                    <td><img [src]="product.imageUrl" alt="{{ product.description }}" class="product-image"></td>
-                    <td>{{ product.description }}</td>
-                    <td>{{ product.price }}</td>
-                    <td>{{ product.stock }}</td>
-                    <td>
-                        <button (click)="viewProduct(product.id)">View</button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
 
-    <ng-template #noProducts>
-        <p>Cart Empty</p>
-    </ng-template>
+    <table class="list-table" >
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Image</th>
+                <th>Description</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Item Total</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let cartItem of cartItems">
+                <td>{{ cartItem.product.id }}</td>
+                <td><img [src]="cartItem.product.imageUrl" alt="{{ cartItem.product.description }}" class="product-image"></td>
+                <td>{{ cartItem.product.description }}</td>
+                <td>{{ cartItem.product.price }}</td>
+                <td>x{{ cartItem.quantity }}</td>
+                <td>{{ cartItem.totalItemPrice }}</td>
+                <td>
+                    <button (click)="viewProduct(cartItem.product.id)">View</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div *ngIf="user.coupon && !currentOrder.coupon">
+        {{ user.coupon.discount }}% off coupon available   
+        <button class="apply-button" (click)="applyCoupon()">Apply</button>
+    </div>
+    <div *ngIf="user.coupon && currentOrder.coupon">
+        {{ user.coupon.discount }}% off coupon applied
+    </div>
+
+    <table class="price-breakdown">
+        <tbody>
+          <tr>
+            <td class="edit-label"><label for="initialTotal">Initial Total:</label></td>
+            <td> {{ currentOrder.initialTotal | number:'1.2-2' }}</td>
+          </tr>
+          <tr>
+            <td class="edit-label"><label for="discount">Discount:</label></td>
+            <td> {{ currentOrder.discount | number:'1.2-2' }}</td>
+          </tr>
+          <tr>
+            <td class="edit-label"><label for="finalTotal">Final Total:</label></td>
+            <td> {{ currentOrder.finalTotal | number:'1.2-2' }}</td>
+          </tr>
+        </tbody>
+    </table>
+
+    <button (click)="placeOrder()">Place Order</button>
 </div>
+
+
+<ng-template #noCartItems class="container">
+    <h1 class="table-list-header">Cart</h1>
+    <h2 class="table-list-header">Cart Currently Empty</h2>
+</ng-template>

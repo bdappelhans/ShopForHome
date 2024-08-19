@@ -21,3 +21,36 @@
     grid-column: 3 / 4;
     text-align: right;
 }
+
+.price-breakdown {
+    width: 30%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 16px;
+  }
+  
+  .price-breakdown tbody tr {
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .price-breakdown td {
+    padding: 8px;
+    text-align: right;
+  }
+  
+  .price-breakdown td.edit-label {
+    font-weight: bold;
+    text-align: left;
+  }
+  
+  .price-breakdown td:last-child {
+    font-weight: bold;
+  }
+  
+  .price-breakdown tbody tr:last-child td {
+    border-bottom: none;
+  }
+
+  .apply-button {
+    margin-left: 15px;
+  }

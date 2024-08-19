@@ -42,12 +42,15 @@ export class AuthService {
     }
 
     fetchUserDetails(): Observable<User | null> {
+      console.log("Fetching user details from authService")
       const token = localStorage.getItem('token');
       if (!token) {
+        console.log("No token found")
         return of(null); // No token, return an observable of null
       }
       return this.http.get<User>(`${API_BASE_URL}/api/users/me`).pipe(
         tap(user => {
+          console.log("Updating user in local storage");
           console.log("Found user details:");
           console.log(user);
           localStorage.setItem('user', JSON.stringify(user));

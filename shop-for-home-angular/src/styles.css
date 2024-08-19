@@ -63,6 +63,10 @@ body {
     margin-bottom: 20px;
 }
 
+table {
+  margin-bottom: 15px;
+}
+
 .table-list-header {
     grid-column: 2 / 3;
     text-align: center;
