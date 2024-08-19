@@ -15,6 +15,7 @@ import { UserProductListComponent } from './user-product-list/user-product-list.
 import { UserProductViewComponent } from './user-product-view/user-product-view.component';
 import { UserCartComponent } from './user-cart/user-cart.component';
 import { UserWishListComponent } from './user-wish-list/user-wish-list.component';
+import { AdminSalesComponent } from './admin-sales-report/admin-sales-report.component';
 
 export const routes: Routes = [
     { path: 'login', component: LoginComponent },
@@ -26,6 +27,7 @@ export const routes: Routes = [
         { path: 'user-list', component: AdminUserListComponent },
         { path: 'user-edit/:userId', component: AdminUserEditComponent },
         { path: 'user-add', component: AdminUserAddComponent },
+        { path: 'sales-report', component: AdminSalesComponent },
         { path: '', redirectTo: 'product-list', pathMatch: 'full' }
     ] },
     { path: 'user', component: UserComponent, canActivate: [UserGuard], children: [

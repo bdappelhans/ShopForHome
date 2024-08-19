@@ -8,7 +8,9 @@ import com.cogent.shop_for_home_spring_boot.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/orders")
@@ -19,6 +21,16 @@ public class OrderController {
 
     @Autowired
     private UserService userService;
+
+    @GetMapping("all/placed")
+    public List<Order> getAllPlacedOrders() {
+        return orderService.getAllPlacedOrders();
+    }
+
+    @GetMapping("/startDate={startDate}&endDate={endDate}")
+    public List<Order> getOrdersByDate(@PathVariable LocalDate startDate, @PathVariable LocalDate endDate) {
+        return orderService.getOrdersWithinDateRange(startDate, endDate);
+    }
 
     @PostMapping("/create")
     public Order createOrder(@RequestBody Order order) {

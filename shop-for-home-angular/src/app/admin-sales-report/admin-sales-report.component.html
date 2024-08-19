@@ -1,1 +1,32 @@
-<p>admin-sales-report works!</p>
+<div class="container">
+    <h1>Sales Report</h1>
+    <form (ngSubmit)="onSubmit()">
+        <span class="date-label">Start Date:</span>
+        <input class="date-selector" type="date" name="startDate" [(ngModel)]="startDate" />
+        <span class="date-label">End Date:</span>
+        <input class="date-selector" type="date" name="endDate" [(ngModel)]="endDate" />
+        <button type="submit">Search</button>
+    </form>
+    <div *ngIf="this.formattedStartDate && this.formattedEndDAte">
+        <h2>{{ formattedStartDate }} - {{ formattedEndDAte }}</h2>
+        <table class="report-breakdown" *ngIf="orders.length > 0 else noOrdersAvailable">
+            <tbody>
+              <tr>
+                <td class="edit-label"><label for="noOrders">Number of Orders:</label></td>
+                <td class="data-cell">{{ noOrders }}</td>
+              </tr>
+              <tr>
+                <td class="edit-label"><label for="discount">Total Revenue:</label></td>
+                <td class="data-cell">{{ totalRevenue | number:'1.2-2' }}</td>
+              </tr>
+              <tr>
+                <td class="edit-label"><label for="finalTotal">Total Discounts Redeemed:</label></td>
+                <td class="data-cell">{{ totalDiscount | number:'1.2-2' }}</td>
+              </tr>
+            </tbody>
+          </table>
+          <ng-template #noOrdersAvailable>
+            <p>No orders available</p>
+          </ng-template>
+    </div>
+</div>

@@ -37,6 +37,11 @@ export class OrderService {
     return this.http.post<Order>(`${this.orderApiUrl}/create`, newOrder);
   }
 
+  getAllPlacedOrders() {
+    const url = `${this.orderApiUrl}/all/placed`;
+    return this.http.get<Order[]>(url);
+  }
+
   updateOrder(order: Order): Observable<Order> {
     const url = `${this.orderApiUrl}/update`;
     return this.http.put<Order>(url, order, this.httpOptions);
@@ -45,6 +50,11 @@ export class OrderService {
   placeOrder(order: Order): Observable<Order> {
     const url = `${this.orderApiUrl}/place`;
     return this.http.put<Order>(url, order, this.httpOptions);
+  }
+
+  getOrdersByDateRange(startDate: Date, endDate: Date): Observable<Order[]> {
+
+    return this.http.get<Order[]>(`${this.orderApiUrl}/startDate=${startDate}&endDate=${endDate}`);
   }
 /*
   addProduct(product: Product): Observable<Product> {

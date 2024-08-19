@@ -2,6 +2,8 @@ package com.cogent.shop_for_home_spring_boot.service;
 
 import com.cogent.shop_for_home_spring_boot.entity.Order;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public interface OrderService {
@@ -21,4 +23,6 @@ public interface OrderService {
     Order createOrder(Order order);
 
     Order updateOrder(Order order);
+
+    List<Order> getOrdersWithinDateRange(LocalDate start, LocalDate end);
 }

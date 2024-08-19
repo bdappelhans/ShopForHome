@@ -4,6 +4,8 @@ import com.cogent.shop_for_home_spring_boot.entity.Order;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
@@ -20,4 +22,7 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
 
     // Custom query method to find all placed orders by user ID
     List<Order> findByUserIdAndIsPlacedFalse(Long userId);
+
+    // Custom query method to find all orders between two specified dates
+    List<Order> findByIsPlacedTrueAndOrderDateBetween(LocalDateTime startDate, LocalDateTime endDate);
 }
