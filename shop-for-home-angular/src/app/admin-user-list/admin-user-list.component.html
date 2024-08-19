@@ -12,7 +12,6 @@
                     <th>Last Name</th>
                     <th>Email</th>
                     <th>Coupon</th>
-                    <th>Status</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -22,7 +21,6 @@
                     <td>{{ user.lastName }}</td>
                     <td>{{ user.email}}</td>
                     <td>{{ user.coupon ? user.coupon.discount + '% off' : 'None' }}</td>
-                    <td>{{ user.active ? 'Active' : 'Inactive' }}</td>
                     <td>
                         <button (click)="changeUserStatus(user)">Remove</button>
                         <button (click)="editUser(user.id)">Edit</button>

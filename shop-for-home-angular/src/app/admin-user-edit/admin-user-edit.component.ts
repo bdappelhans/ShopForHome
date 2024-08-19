@@ -86,6 +86,17 @@ export class AdminUserEditComponent implements OnInit{
     }
   }
 
+  remove(): void {
+    if (this.user) {
+      this.user.active = false;
+
+      this.userService.updateUser(this.user).subscribe(
+        () => this.router.navigate(['/admin/user-list']),
+        (error) => console.error('Error saving user:', error)
+      );
+    }
+  }
+
   validateFields(user: User): boolean {
     this.nullFirstName = user.firstName === '';
     this.nullLastName = user.lastName === '';

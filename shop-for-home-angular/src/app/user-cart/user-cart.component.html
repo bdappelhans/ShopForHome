@@ -6,7 +6,6 @@
     <table class="list-table" >
         <thead>
             <tr>
-                <th>ID</th>
                 <th>Image</th>
                 <th>Description</th>
                 <th>Price</th>
@@ -17,7 +16,6 @@
         </thead>
         <tbody>
             <tr *ngFor="let cartItem of cartItems">
-                <td>{{ cartItem.product.id }}</td>
                 <td><img [src]="cartItem.product.imageUrl" alt="{{ cartItem.product.description }}" class="product-image"></td>
                 <td>{{ cartItem.product.description }}</td>
                 <td>{{ cartItem.product.price }}</td>

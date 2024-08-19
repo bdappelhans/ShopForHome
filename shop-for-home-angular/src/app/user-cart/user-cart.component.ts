@@ -36,23 +36,51 @@ export class UserCartComponent implements OnInit {
   fetchCartItems(): void {
     if (this.currentOrder?.orderProducts) {
 
-      for (const op of this.currentOrder.orderProducts) {
+      const invalidIndices: number[] = [];
+      let invalidCartItems: boolean = false;
+
+      // iterate through current order's products, fetch them, and place them in cart array
+      for (let i = 0; i < this.currentOrder.orderProducts.length; i++) {
+        const op = this.currentOrder.orderProducts[i];
+
         this.productService.getProductById(op.id.productId).subscribe(
           (product: Product) => {
+            // if item is no longer available, collect index of item
+            if (!product.active || product.stock < 1) {
+              invalidIndices.push(i);
+              invalidCartItems = true;
+            } else {
+
             // set quantity and total item price variables, create new cartItem from information
             const quantity: number = op.quantity;
             const itemTotal: number = op.quantity * product.price;
+
             const cartItem: CartItem = { product: product, quantity: quantity, totalItemPrice: itemTotal };
 
             // push cartItem into array
             this.cartItems.push(cartItem);
+            }
           },
           (error) => {
             console.error('Error fetching product:', error)
           }
         )
       }
-      console.log("Cart Items: ", this.cartItems);
+
+      // if any cart items are invalid, remove them from the order, display message, and update order
+      setTimeout(() => {
+        for (const index of invalidIndices.reverse()) {
+          this.currentOrder?.orderProducts.splice(index, 1);
+        }
+  
+        if (invalidCartItems) {
+          alert("One or more items in your cart is no longer available. Cart has been updated.");
+          this.updateOrderRefresh();
+          invalidCartItems = false;
+        }
+  
+        console.log("Cart Items: ", this.cartItems);
+      }, 500); // Adjust delay based on the timing needs
     }
   }
 
@@ -135,6 +163,7 @@ export class UserCartComponent implements OnInit {
         (updatedOrder: Order) => {
           console.log("Updating order");
           this.currentOrder = updatedOrder;
+          console.log(this.currentOrder);
         },
         (error) =>  { 
           console.error('Error updating order:', error);
