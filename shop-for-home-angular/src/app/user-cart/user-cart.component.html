@@ -4,16 +4,6 @@
     </div>
 
     <table class="list-table" >
-        <thead>
-            <tr>
-                <th>Image</th>
-                <th>Description</th>
-                <th>Price</th>
-                <th>Quantity</th>
-                <th>Item Total</th>
-                <th>Action</th>
-            </tr>
-        </thead>
         <tbody>
             <tr *ngFor="let cartItem of cartItems">
                 <td><img [src]="cartItem.product.imageUrl" alt="{{ cartItem.product.description }}" class="product-image"></td>

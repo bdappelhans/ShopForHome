@@ -102,10 +102,3 @@ CREATE TABLE wish_list (
     FOREIGN KEY (product_id) REFERENCES products(id)
 );
 
-select * from users;
-
-select * from addresses;
-
-select * from coupons;
-
-describe orders;

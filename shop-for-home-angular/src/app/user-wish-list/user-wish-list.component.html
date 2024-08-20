@@ -3,23 +3,11 @@
         <h1 class="table-list-header">Wish List</h1>
     </div>
         <table class="list-table" *ngIf="products.length > 0; else noProducts">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Image</th>
-                    <th>Description</th>
-                    <th>Price</th>
-                    <th>Stock</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
             <tbody>
                 <tr *ngFor="let product of products">
-                    <td>{{ product.id }}</td>
                     <td><img [src]="product.imageUrl" alt="{{ product.description }}" class="product-image"></td>
                     <td>{{ product.description }}</td>
                     <td>{{ product.price }}</td>
-                    <td>{{ product.stock }}</td>
                     <td>
                         <button (click)="viewProduct(product.id)">View</button>
                         <button (click)="removeFromWishList(product.id)">Remove</button>
