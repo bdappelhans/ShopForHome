@@ -127,9 +127,13 @@ export class UserProductViewComponent implements OnInit {
   }
   
   saveCart(): void {
-    if (this.currentOrder && this.orderProduct) {
+    if (this.currentOrder && this.orderProduct && this.product) {
       if (!this.currentOrder.orderProducts) {
         this.currentOrder.orderProducts = [];
+      }
+
+      if (this.orderProduct.quantity > this.product.stock) {
+        this.orderProduct.quantity = this.product.stock;
       }
 
       if (this.orderProductIdx !== -1) { // if product already present, update element in array

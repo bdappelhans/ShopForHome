@@ -1,34 +1,31 @@
 <div class="element-container" *ngIf="product != null && orderProduct != null">
     <div class="element-form">
-    <form (ngSubmit)="saveCart()">
-    <h1>{{ product.description }}</h1>
+      <h1>{{ product.description }}</h1>
+      <form (ngSubmit)="saveCart()">
         <table>
           <tbody>
-            <tr>
-              <td class="edit-label"><label for="stock">Stock:</label></td>
-              <td> {{ product.stock }}</td>
-            </tr>
             <tr>
               <td class="edit-label"><label for="price">Price:</label></td>
               <td> {{ product.price }}</td>
             </tr>
              <!-- Stepper Input Row -->
-            <tr>
-            <td class="edit-label"><label for="quantity">Quantity:</label></td>
-            <td>
-              <input type="number" id="quantity" name="quantity" [(ngModel)]="orderProduct.quantity" [min]="1" [max]="product.stock" />
-            </td>
-          </tr>
+            <tr *ngIf="product.stock > 0">
+              <td class="edit-label"><label for="quantity">Quantity:</label></td>
+              <td>
+                <input type="number" id="quantity" name="quantity" [(ngModel)]="orderProduct.quantity" [min]="1" [max]="product.stock" />
+              </td>
+            </tr>
           </tbody>
         </table>
+        <p *ngIf="product.stock < 1">This item is currently out of stock.</p>
         <div class="button-container">
-            <button class="edit-button" type="submit"> {{ cartButtonText }}</button>
-            <button *ngIf="orderProductIdx != -1" class="edit-button" type="button" (click) ="removeItem()">Remove From Cart</button>
+            <button *ngIf="product.stock > 0" class="edit-button" type="submit"> {{ cartButtonText }}</button>
+            <button *ngIf="orderProductIdx != -1 && product.stock > 0" class="edit-button" type="button" (click) ="removeItem()">Remove From Cart</button>
             <button *ngIf="wishItem != null" class="edit-button" type="button" (click)="removeWishList()">Remove from Wish List</button>
             <button *ngIf="wishItem == null" class="edit-button" type="button" (click)="addWishList()">Add to Wish List</button>
             <button class="edit-button" type="button" (click)="cancel()">Cancel</button>
         </div>
-        <div *ngIf="orderProductIdx != -1">
+        <div *ngIf="orderProductIdx != -1 && product.stock > 0">
           <p>This item is already in your cart. Press the Update button to update the quantity or the Remove button to remove it from your cart.
           </p>
         </div>
