@@ -5,7 +5,7 @@
         <input class="date-selector" type="date" name="startDate" [(ngModel)]="startDate" />
         <span class="date-label">End Date:</span>
         <input class="date-selector" type="date" name="endDate" [(ngModel)]="endDate" />
-        <button type="submit">Search</button>
+        <button type="submit">Generate</button>
     </form>
     <div *ngIf="this.formattedStartDate && this.formattedEndDAte">
         <h2>{{ formattedStartDate }} - {{ formattedEndDAte }}</h2>

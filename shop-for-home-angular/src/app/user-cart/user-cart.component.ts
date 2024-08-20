@@ -41,7 +41,7 @@ export class UserCartComponent implements OnInit {
 
       // iterate through current order's products, fetch them, and place them in cart array
       for (let i = 0; i < this.currentOrder.orderProducts.length; i++) {
-        const op = this.currentOrder.orderProducts[i];
+        let op = this.currentOrder.orderProducts[i];
 
         this.productService.getProductById(op.id.productId).subscribe(
           (product: Product) => {
@@ -50,15 +50,24 @@ export class UserCartComponent implements OnInit {
               invalidIndices.push(i);
               invalidCartItems = true;
             } else {
+              
+              // if quantity in cart is greater than stock available, set quantity to current stock and update order
+              if (op.quantity > product.stock) {
+                if (this.currentOrder?.orderProducts) {
+                  console.log("Found cart item with greater quantity than available stock");
+                  this.currentOrder.orderProducts[i].quantity = product.stock;
+                  op = this.currentOrder.orderProducts[i];
+                  invalidCartItems = true;
+                }
+              }
+              // set quantity and total item price variables, create new cartItem from information
+              const quantity: number = op.quantity;
+              const itemTotal: number = (op.quantity * product.price);
 
-            // set quantity and total item price variables, create new cartItem from information
-            const quantity: number = op.quantity;
-            const itemTotal: number = op.quantity * product.price;
+              const cartItem: CartItem = { product: product, quantity: quantity, totalItemPrice: itemTotal };
 
-            const cartItem: CartItem = { product: product, quantity: quantity, totalItemPrice: itemTotal };
-
-            // push cartItem into array
-            this.cartItems.push(cartItem);
+              // push cartItem into array
+              this.cartItems.push(cartItem);
             }
           },
           (error) => {
