@@ -38,6 +38,7 @@ export class AdminProductListComponent implements OnInit {
   changeProductStatus(product: Product): void {
     if (product.active) {
       product.active = false;
+      this.products = this.products.filter(currentProduct => currentProduct.id !== product.id);
     } else {
       if (product.stock < 1) {
         alert('Error: Product can\'t be active if its current stock is 0. Update stock to activate.')
