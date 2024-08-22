@@ -2,18 +2,18 @@
     <div class="table-header">
         <h1 class="table-list-header">Products</h1>
     </div>
-        <table class="list-table" *ngIf="products.length > 0; else noProducts">
+        <table class="list-table-clean" *ngIf="products.length > 0; else noProducts">
             <tbody>
-                <tr *ngFor="let product of products">
-                    <td><img [src]="product.imageUrl" alt="{{ product.description }}" class="product-image"></td>
-                    <td>{{ product.description }}</td>
-                    <td>{{ product.price }}</td>
+                <tr *ngFor="let product of products" class="clickable">
+                    <td (click)="viewProduct(product.id)"><img [src]="product.imageUrl" alt="{{ product.description }}" class="product-image"></td>
+                    <td (click)="viewProduct(product.id)">{{ product.description }}</td>
+                    <td (click)="viewProduct(product.id)">{{ product.price }}</td>
                     <td>
                         <form (ngSubmit)="updateCart(product.id)" *ngIf="product.stock > 0 else noStock">
                             <input type="number" id="quantity" name="quantity" class="number-box"
                             [(ngModel)]="this.opDetails[product.id].orderProduct.quantity" [min]="1" [max]="product.stock" />
                             <button class="edit-button" type="submit">
-                                 {{ this.opDetails[product.id].alreadyInCart ? 'Update Cart' : 'Add To Cart' }}
+                                 {{ this.opDetails[product.id].alreadyInCart ? 'Update Cart' : 'Add to Cart' }}
                             </button>
                         </form>
                         <ng-template #noStock>
@@ -21,7 +21,12 @@
                         </ng-template>
                     </td>
                     <td>
-                        <button (click)="viewProduct(product.id)">View Item</button>
+                        <button (click)="handleWishList(product.id)">
+                            {{ this.opDetails[product.id].alreadyInWishList ? 'Remove from Wish List' : 'Add to Wish List' }}
+                        </button>
+                    </td>
+                    <td>
+                        <button *ngIf="this.opDetails[product.id].alreadyInCart" class="edit-button" type="button" (click)="removeFromCart(product.id)">Remove from Cart</button>
                     </td>
                 </tr>
             </tbody>

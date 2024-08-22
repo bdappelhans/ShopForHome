@@ -2,7 +2,7 @@
     <div class="table-header">
         <h1 class="table-list-header">Wish List</h1>
     </div>
-        <table class="list-table" *ngIf="products.length > 0; else noProducts">
+        <table class="list-table-clean" *ngIf="products.length > 0; else noProducts">
             <tbody>
                 <tr *ngFor="let product of products">
                     <td><img [src]="product.imageUrl" alt="{{ product.description }}" class="product-image"></td>
