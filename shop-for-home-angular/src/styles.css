@@ -109,3 +109,7 @@ table {
     grid-column: 3 / 4;
     text-align: right;
 }
+
+.strong {
+  font-weight: bold;
+}

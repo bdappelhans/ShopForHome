@@ -9,13 +9,14 @@
                 <td><img [src]="cartItem.product.imageUrl" alt="{{ cartItem.product.description }}" class="product-image"></td>
                 <td>{{ cartItem.product.description }}</td>
                 <td>{{ cartItem.product.price | number:'1.2-2' }}</td>
-                <td>
+                <td>x 
                 <input type="number" id="quantity" name="quantity" class="number-box"
                             [(ngModel)]="cartItem.quantity" (ngModelChange)="onStepperChange(cartItem)" [min]="1" [max]="cartItem.product.stock" />
                 </td>
-                <td>{{ cartItem.quantity * cartItem.product.price | number:'1.2-2' }}</td>
+                <td class="strong">{{ cartItem.quantity * cartItem.product.price | number:'1.2-2' }}</td>
                 <td>
-                    <button (click)="viewProduct(cartItem.product.id)">View</button>
+                    <button class="edit-button" (click)="removeFromCart(cartItem.product.id)">Remove</button>
+                    <button class="edit-button" (click)="viewProduct(cartItem.product.id)">View</button>
                 </td>
             </tr>
         </tbody>

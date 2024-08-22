@@ -178,6 +178,16 @@ export class UserCartComponent implements OnInit {
     }
   }
 
+  removeFromCart(productId: number) {
+      if (this.currentOrder) {
+        this.currentOrder.orderProducts = this.currentOrder.orderProducts.filter(op => op.id.productId === productId);
+        console.log("Removed product ID " + productId + " from order " + this.currentOrder.id);
+        this.cartItems = this.cartItems.filter(ci => ci.product.id === productId);
+        this.updateOrderRefresh();
+      }
+
+  }
+
   updateOrderRefresh(): void {
     if (this.currentOrder) {
       // update order through API
