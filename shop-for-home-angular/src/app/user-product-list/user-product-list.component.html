@@ -13,7 +13,7 @@
                             <input type="number" id="quantity" name="quantity" class="number-box"
                             [(ngModel)]="this.opDetails[product.id].orderProduct.quantity" [min]="1" [max]="product.stock" />
                             <button class="edit-button" type="submit">
-                                 {{ this.opDetails[product.id].alreadyInCart ? 'Update Cart' : 'Add to Cart' }}
+                                 Add to Cart
                             </button>
                         </form>
                         <ng-template #noStock>
@@ -24,9 +24,6 @@
                         <button (click)="handleWishList(product.id)">
                             {{ this.opDetails[product.id].alreadyInWishList ? 'Remove from Wish List' : 'Add to Wish List' }}
                         </button>
-                    </td>
-                    <td>
-                        <button *ngIf="this.opDetails[product.id].alreadyInCart" class="edit-button" type="button" (click)="removeFromCart(product.id)">Remove from Cart</button>
                     </td>
                 </tr>
             </tbody>

@@ -22,8 +22,8 @@
                     <td>{{ user.email}}</td>
                     <td>{{ user.coupon ? user.coupon.discount + '% off' : 'None' }}</td>
                     <td>
-                        <button (click)="changeUserStatus(user)">Remove</button>
-                        <button (click)="editUser(user.id)">Edit</button>
+                        <button (click)="changeUserStatus(user)" class="edit-button">Remove</button>
+                        <button (click)="editUser(user.id)" class="edit-button">Edit</button>
                     </td>
                 </tr>
             </tbody>

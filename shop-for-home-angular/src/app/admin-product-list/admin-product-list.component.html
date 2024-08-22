@@ -22,8 +22,8 @@
                     <td>{{ product.price }}</td>
                     <td>{{ product.stock }}</td>
                     <td>
-                        <button (click)="changeProductStatus(product)">Remove</button>
-                        <button (click)="editProduct(product.id)">Edit</button>
+                        <button (click)="changeProductStatus(product)" class="edit-button">Remove</button>
+                        <button (click)="editProduct(product.id)" class="edit-button">Edit</button>
                     </td>
                 </tr>
             </tbody>

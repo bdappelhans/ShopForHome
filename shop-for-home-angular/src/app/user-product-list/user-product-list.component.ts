@@ -138,7 +138,7 @@ export class UserProductListComponent implements OnInit {
         let index = this.currentOrder.orderProducts.findIndex(op => op.id.productId === productId);
   
         if (index != -1) {
-          this.currentOrder.orderProducts[index] = op;
+          this.currentOrder.orderProducts[index].quantity += op.quantity;
         }
       } else {
         this.currentOrder.orderProducts.push(op);
