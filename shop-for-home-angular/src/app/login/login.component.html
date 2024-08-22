@@ -4,12 +4,14 @@
     </div>
     <h2>Login</h2>
     <div id="login-form">
-        <form #loginForm="ngForm" (ngSubmit)="attemptLogin()">
+        <form #loginForm="ngForm" (ngSubmit)="validateInput()">
             <label for="email">Email</label>
             <input type="text" id="email" name="email" [(ngModel)]="loginUser.email" required autocomplete="off">
+            <span class="error" *ngIf="nullEmail">Email is required</span>
 
             <label for="password">Password</label>
             <input type="password" id="password" name="password" [(ngModel)]="loginUser.password" required autocomplete="off">
+            <span class="error" *ngIf="nullPassword">Password is required</span>
 
             <label for="role">Role</label>
             <select id="role" name="role" [(ngModel)]="admin" required>

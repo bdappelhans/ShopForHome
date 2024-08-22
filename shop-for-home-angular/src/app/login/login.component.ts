@@ -16,6 +16,8 @@ import { LoginUserDto } from '../model/login-user-dto';
 export class LoginComponent implements OnInit {
   loginUser: LoginUserDto = { email: '', password: '' };
   admin: boolean = false;
+  nullEmail: boolean = false;
+  nullPassword: boolean = false;
 
   constructor(
     private authService: AuthService,
@@ -27,6 +29,24 @@ export class LoginComponent implements OnInit {
     if (isPlatformBrowser(this.platformId)) {
       localStorage.removeItem('user');
       localStorage.removeItem('token');
+    }
+  }
+
+  validateInput(): void {
+    if (this.loginUser.email === '') {
+      this.nullEmail = true;
+    } else {
+      this.nullEmail = false;
+    }
+
+    if (this.loginUser.password === '') {
+      this.nullPassword = true;
+    } else {
+      this.nullPassword = false;
+    }
+
+    if (!this.nullEmail && !this.nullPassword) {
+      this.attemptLogin();
     }
   }
 

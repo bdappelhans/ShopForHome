@@ -70,8 +70,12 @@ export class UserProductListComponent implements OnInit {
       let opDetails: OrderProductDetails;
 
       if (orderProduct) {
-        opDetails = { orderProduct, alreadyInCart: true, alreadyInWishList };
+        if (this.currentOrder) {
+          let op: OrderProduct = {id: { orderId: this.currentOrder.id, productId: product.id}, quantity: 1 };
+        opDetails = { orderProduct: op, alreadyInCart: true, alreadyInWishList };
         this.opDetails[product.id] = opDetails;
+        }
+        
       } else {
         if (this.currentOrder) {
           let orderProduct = {id: { orderId: this.currentOrder?.id, productId: product.id}, quantity: 1 };
@@ -147,6 +151,7 @@ export class UserProductListComponent implements OnInit {
 
       this.orderService.updateOrder(this.currentOrder).subscribe(
         () => {
+          this.opDetails[productId].orderProduct.quantity = 1;
           alert("Cart successfully updated!");
         },
         (error) =>  { 

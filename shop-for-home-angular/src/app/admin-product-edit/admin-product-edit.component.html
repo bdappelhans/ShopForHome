@@ -6,7 +6,7 @@
           <tbody>
             <tr>
               <td class="edit-label"><label for="description">Description:</label></td>
-              <td><input id="description" type="text" [(ngModel)]="product.description" name="description" required /></td>
+              <td><input id="description" type="text" [(ngModel)]="product.description" name="description" required autocomplete="off"/></td>
             </tr>
             <tr>
               <td class="edit-label"><label for="stock">Stock:</label></td>
@@ -18,7 +18,7 @@
             </tr>
             <tr>
                 <td class="edit-label"><label for="imageUrl">Image URL:</label></td>
-                <td><input id="imageUrl" type="text" [(ngModel)]="product.imageUrl" name="imageUrl" required /></td>
+                <td><input id="imageUrl" type="text" [(ngModel)]="product.imageUrl" name="imageUrl" required autocomplete="off"/></td>
             </tr>
           </tbody>
         </table>
