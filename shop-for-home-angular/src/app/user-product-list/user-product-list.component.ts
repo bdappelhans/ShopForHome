@@ -42,6 +42,7 @@ export class UserProductListComponent implements OnInit {
   }
 
   fetchProducts(): void {
+    console.log("Fetching products");
     this.productService.getActiveProducts().subscribe(
       (products: Product[]) => {
         console.log('Products:', products);
@@ -55,6 +56,7 @@ export class UserProductListComponent implements OnInit {
   }
 
   createProductDetailsMap(): void {
+    console.log("Creating product details map");
     for (const product of this.products) {
       let orderProduct = this.currentOrder?.orderProducts.find(op => op.id.productId === product.id);
       let alreadyInWishList = false;
@@ -87,6 +89,7 @@ export class UserProductListComponent implements OnInit {
   }
 
   fetchUser(): void {
+    console.log("Fetching user");
     if (typeof window !== 'undefined') {
       const userString = localStorage.getItem('user');
 
@@ -103,6 +106,7 @@ export class UserProductListComponent implements OnInit {
   }
 
   fetchUnplacedOrder(): void {
+    console.log("Fetching or creating unplaced order");
     if (this.user) {
       this.orderService.getOrCreateUnplacedOrder(this.user?.id).subscribe(
         (order: Order) => {
@@ -118,6 +122,7 @@ export class UserProductListComponent implements OnInit {
   }
 
   fetchWishList(): void {
+    console.log("Fetching wish list");
     if (this.user) {
       this.wishService.getWishListByUserId(this.user.id).subscribe(
         (wishList: WishList[]) => {
@@ -133,6 +138,7 @@ export class UserProductListComponent implements OnInit {
   }
 
   updateCart(productId: number): void {
+    console.log("Updating cart");
     const opDetails: OrderProductDetails = this.opDetails[productId];
     const op = opDetails.orderProduct;
 

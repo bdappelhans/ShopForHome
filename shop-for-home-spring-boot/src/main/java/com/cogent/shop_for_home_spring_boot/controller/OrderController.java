@@ -57,7 +57,7 @@ public class OrderController {
 
         // remove coupon from user if used in order
         User orderUser = userService.getById(order.getUserId());
-        if (orderUser != null) {
+        if (orderUser != null && orderUser.getCoupon() != null) {
 
             if (orderUser.getCoupon().getId().equals(order.getCoupon().getId())) {
                 System.out.println("Removing coupon from user " + orderUser.getId());
@@ -65,6 +65,13 @@ public class OrderController {
                 userService.saveUser(new UserDto(orderUser));
             }
         }
-        return orderService.updateOrder(order);
+        Order placedOrder = orderService.updateOrder(order);
+
+        if (placedOrder != null) {
+            Order newOrder = new Order();
+            newOrder.setUserId(order.getUserId());
+            orderService.createOrder(newOrder);
+        }
+        return placedOrder;
     }
 }
