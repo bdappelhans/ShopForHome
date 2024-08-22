@@ -11,11 +11,12 @@ import { OrderService } from '../service/order.service';
 import { CartItem } from '../model/cart-item';
 import { OrderProduct } from '../model/order-product';
 import { Coupon } from '../model/coupon';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-admin-product-list',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, HttpClientModule, RouterModule],
+  imports: [CommonModule, RouterOutlet, HttpClientModule, RouterModule, FormsModule],
   providers: [ProductService, AuthService, OrderService],
   templateUrl: './user-cart.component.html',
   styleUrls: ['./user-cart.component.css']
@@ -64,7 +65,7 @@ export class UserCartComponent implements OnInit {
               const quantity: number = op.quantity;
               const itemTotal: number = (op.quantity * product.price);
 
-              const cartItem: CartItem = { product: product, quantity: quantity, totalItemPrice: itemTotal };
+              const cartItem: CartItem = { product: product, quantity: quantity };
 
               // push cartItem into array
               this.cartItems.push(cartItem);
@@ -162,6 +163,18 @@ export class UserCartComponent implements OnInit {
           console.error('Error updating order:', error);
         }
       );
+    }
+  }
+
+  onStepperChange(cartItem: CartItem): void {
+    if (this.currentOrder) {
+      const opIndex = this.currentOrder.orderProducts.findIndex(op => op.id.productId === cartItem.product.id);
+
+      if (opIndex !== -1) {
+        this.currentOrder.orderProducts[opIndex].quantity = cartItem.quantity;
+
+        this.updateOrderRefresh();
+      }
     }
   }
 
