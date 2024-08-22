@@ -21,3 +21,11 @@
     grid-column: 3 / 4;
     text-align: right;
 }
+
+.number-box {
+    width: 45px;
+}
+
+.edit-button {
+    margin: 15px;
+}

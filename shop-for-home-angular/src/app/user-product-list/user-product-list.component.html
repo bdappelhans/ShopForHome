@@ -9,7 +9,19 @@
                     <td>{{ product.description }}</td>
                     <td>{{ product.price }}</td>
                     <td>
-                        <button (click)="viewProduct(product.id)">View</button>
+                        <form (ngSubmit)="updateCart(product.id)" *ngIf="product.stock > 0 else noStock">
+                            <input type="number" id="quantity" name="quantity" class="number-box"
+                            [(ngModel)]="this.opDetails[product.id].orderProduct.quantity" [min]="1" [max]="product.stock" />
+                            <button class="edit-button" type="submit">
+                                 {{ this.opDetails[product.id].alreadyInCart ? 'Update Cart' : 'Add To Cart' }}
+                            </button>
+                        </form>
+                        <ng-template #noStock>
+                            <span>Out of Stock</span>
+                        </ng-template>
+                    </td>
+                    <td>
+                        <button (click)="viewProduct(product.id)">View Item</button>
                     </td>
                 </tr>
             </tbody>
