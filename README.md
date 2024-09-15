@@ -56,3 +56,7 @@ I began by designing a relational database schema with tables for users, product
 For the front end, I initiated an `Angular 18` project and developed login and user registration pages. After extensive trial and error, I successfully integrated `JWT` token authentication. The front end submits user credentials to an API endpoint on the back end, where they are validated. Upon successful validation, a JWT token is returned to the front end and used to fetch unique user information. This token is stored on the front end and attached to the header of all relevant HTTP requests via an interceptor.
 
 I implemented role-based authorization on the back end to restrict access to certain APIs and applied authorization guards on the front end for user and administrator portals. `Angular` routes and components were employed to create distinct pages for both customer and admin views. Additionally, I developed model classes that correspond to the back-end entities and service classes to communicate with the back end, allowing the retrieval of user, product, and order information.
+
+## Future
+
+While the base for this project is complete, I have plans to implement further functionality in the future.
