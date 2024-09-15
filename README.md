@@ -30,6 +30,8 @@ The login page validates login credentials for both users and administrators. If
 
 ### Customer
 
+![Shop For Home Customer Product View Page](./images/customer_product_view.png)
+
 Upon successful login, a customer is able to:
 - View all available products in a list view
 - View each individual product in a more detailed product view page
