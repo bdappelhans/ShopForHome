@@ -22,6 +22,7 @@ public class SecurityConfiguration {
     private final AuthenticationProvider authenticationProvider;
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
+    // Constructor-based dependency injection for JwtAuthenticationFilter and AuthenticationProvider
     public SecurityConfiguration(
             JwtAuthenticationFilter jwtAuthenticationFilter,
             AuthenticationProvider authenticationProvider
@@ -32,32 +33,35 @@ public class SecurityConfiguration {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        // Configure HTTP security for the application
         http
-                .csrf().disable()
-                .cors().and() // Add this to apply the CORS configuration
+                .csrf().disable()  // Disable CSRF protection (typically used for REST APIs)
+                .cors().and()  // Apply CORS configuration
                 .authorizeHttpRequests()
-                .requestMatchers("/auth/**").permitAll()
-                .anyRequest().authenticated()
+                .requestMatchers("/auth/**").permitAll()  // Allow unauthenticated access to /auth/** endpoints
+                .anyRequest().authenticated()  // Require authentication for all other requests
                 .and()
                 .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)  // Use stateless sessions (no session storage)
                 .and()
-                .authenticationProvider(authenticationProvider)
-                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+                .authenticationProvider(authenticationProvider)  // Set custom AuthenticationProvider
+                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);  // Add custom JWT filter before default authentication filter
 
-        return http.build();
+        return http.build();  // Build and return the SecurityFilterChain
     }
 
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
+        // Configure CORS settings
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of("http://localhost:4200")); // Set your front-end origin here
-        configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-        configuration.setAllowedHeaders(List.of("Authorization", "Content-Type"));
-        configuration.setAllowCredentials(true);
+        configuration.setAllowedOrigins(List.of("http://localhost:4200"));  // Allow requests from the specified origin
+        configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));  // Allow specific HTTP methods
+        configuration.setAllowedHeaders(List.of("Authorization", "Content-Type"));  // Allow specific headers
+        configuration.setAllowCredentials(true);  // Allow credentials (cookies, authorization headers, etc.)
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", configuration);
-        return source;
+        source.registerCorsConfiguration("/**", configuration);  // Apply CORS configuration to all endpoints
+        return source;  // Return the CORS configuration source
     }
 }
+

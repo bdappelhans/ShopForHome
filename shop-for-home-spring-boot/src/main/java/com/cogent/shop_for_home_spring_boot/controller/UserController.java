@@ -82,6 +82,7 @@ public class UserController {
     }
 
     @DeleteMapping("/delete/{userId}")
+    @PreAuthorize("hasRole('ADMIN')")
     public void deleteUser(@PathVariable Long userId) {
         User foundUser = userService.getById(userId);
 

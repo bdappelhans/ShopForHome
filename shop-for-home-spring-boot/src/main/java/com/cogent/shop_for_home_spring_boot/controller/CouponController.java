@@ -3,6 +3,7 @@ package com.cogent.shop_for_home_spring_boot.controller;
 import com.cogent.shop_for_home_spring_boot.entity.Coupon;
 import com.cogent.shop_for_home_spring_boot.service.CouponService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -36,6 +37,7 @@ public class CouponController {
     }
 
     @PostMapping("/add")
+    @PreAuthorize("hasRole('ADMIN')")
     public Coupon addCoupon(@RequestBody Coupon coupon) {
         coupon.setId(0L);
         coupon.setActive(true);
@@ -43,6 +45,7 @@ public class CouponController {
     }
 
     @PutMapping("/update")
+    @PreAuthorize("hasRole('ADMIN')")
     public Coupon updateCoupon(@RequestBody Coupon coupon) {
         return couponService.updateCoupon(coupon);
     }

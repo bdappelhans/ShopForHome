@@ -3,6 +3,7 @@ package com.cogent.shop_for_home_spring_boot.controller;
 import com.cogent.shop_for_home_spring_boot.entity.Product;
 import com.cogent.shop_for_home_spring_boot.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,6 +17,7 @@ public class ProductController {
     private ProductService productService;
 
     @GetMapping("/all")
+    @PreAuthorize("hasRole('ADMIN')")
     public List<Product> getAllProducts() {
         return productService.getAllProducts();
     }
@@ -31,12 +33,14 @@ public class ProductController {
     }
 
     @PostMapping("/add")
+    @PreAuthorize("hasRole('ADMIN')")
     public Product addProduct(@RequestBody Product product) {
         product.setId(0L);
         return productService.createProduct(product);
     }
 
     @PutMapping("/update")
+    @PreAuthorize("hasRole('ADMIN')")
     public Product updateProduct(@RequestBody Product product) {
         return productService.updateProduct(product);
     }

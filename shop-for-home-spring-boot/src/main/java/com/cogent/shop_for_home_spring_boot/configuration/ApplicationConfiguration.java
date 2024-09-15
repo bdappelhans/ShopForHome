@@ -15,33 +15,42 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 public class ApplicationConfiguration {
     private final UserRepository userRepository;
 
+    // Constructor-based dependency injection for UserRepository
     public ApplicationConfiguration(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
     @Bean
     UserDetailsService userDetailsService() {
+        // Define a UserDetailsService bean to load user details by username (email)
         return username -> userRepository.findByEmail(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
     }
 
     @Bean
     BCryptPasswordEncoder passwordEncoder() {
+        // Define a BCryptPasswordEncoder bean for encoding passwords
         return new BCryptPasswordEncoder();
     }
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
+        // Define an AuthenticationManager bean using the provided AuthenticationConfiguration
         return config.getAuthenticationManager();
     }
 
     @Bean
     AuthenticationProvider authenticationProvider() {
+        // Define an AuthenticationProvider bean for authentication using DaoAuthenticationProvider
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
 
+        // Set the UserDetailsService to load user details
         authProvider.setUserDetailsService(userDetailsService());
+
+        // Set the PasswordEncoder for validating passwords
         authProvider.setPasswordEncoder(passwordEncoder());
 
         return authProvider;
     }
 }
+

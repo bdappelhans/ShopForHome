@@ -6,6 +6,7 @@ import com.cogent.shop_for_home_spring_boot.entity.User;
 import com.cogent.shop_for_home_spring_boot.service.OrderService;
 import com.cogent.shop_for_home_spring_boot.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -23,11 +24,13 @@ public class OrderController {
     private UserService userService;
 
     @GetMapping("all/placed")
+    @PreAuthorize("hasRole('ADMIN')")
     public List<Order> getAllPlacedOrders() {
         return orderService.getAllPlacedOrders();
     }
 
     @GetMapping("/startDate={startDate}&endDate={endDate}")
+    @PreAuthorize("hasRole('ADMIN')")
     public List<Order> getOrdersByDate(@PathVariable LocalDate startDate, @PathVariable LocalDate endDate) {
         return orderService.getOrdersWithinDateRange(startDate, endDate);
     }

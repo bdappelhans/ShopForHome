@@ -9,7 +9,7 @@ body {
 }
 
 .clickable:hover {
-  background-color:#ece9e9;
+  background-color:lightgray;
 }
 
   /* Style the submit button */

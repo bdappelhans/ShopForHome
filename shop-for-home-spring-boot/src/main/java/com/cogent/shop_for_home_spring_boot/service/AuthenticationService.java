@@ -11,12 +11,11 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class AuthenticationService {
-    private final UserRepository userRepository;
+    private final UserRepository userRepository;  // Repository for interacting with user data
+    private final PasswordEncoder passwordEncoder;  // Encoder for hashing user passwords
+    private final AuthenticationManager authenticationManager;  // Manager for handling authentication
 
-    private final PasswordEncoder passwordEncoder;
-
-    private final AuthenticationManager authenticationManager;
-
+    // Constructor for dependency injection
     public AuthenticationService(
             UserRepository userRepository,
             AuthenticationManager authenticationManager,
@@ -27,22 +26,21 @@ public class AuthenticationService {
         this.passwordEncoder = passwordEncoder;
     }
 
+    // Method for user registration
     public User signup(RegisterUserDto input) {
         User user = new User();
-        user.setFirstName(input.getFirstName());
-        user.setLastName(input.getLastName());
-        user.setEmail(input.getEmail());
-        user.setPassword(passwordEncoder.encode(input.getPassword()));
-        user.setActive(true);
+        user.setFirstName(input.getFirstName());  // Set user's first name
+        user.setLastName(input.getLastName());  // Set user's last name
+        user.setEmail(input.getEmail());  // Set user's email
+        user.setPassword(passwordEncoder.encode(input.getPassword()));  // Encode and set user's password
+        user.setActive(true);  // Mark user as active
 
-        if (user.getFirstName().equalsIgnoreCase("admin")) {
-            user.setAdmin(true);
-        }
-
-        return userRepository.save(user);
+        return userRepository.save(user);  // Save the new user to the repository and return it
     }
 
+    // Method for user authentication
     public User authenticate(LoginUserDto input) {
+        // Attempt authentication with provided email and password
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         input.getEmail(),
@@ -50,7 +48,9 @@ public class AuthenticationService {
                 )
         );
 
+        // Retrieve and return the user from the repository based on email
         return userRepository.findByEmail(input.getEmail())
-                .orElseThrow();
+                .orElseThrow();  // Throw exception if user not found
     }
 }
+

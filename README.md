@@ -20,6 +20,8 @@ Shop For Home is a full-stack e-commerce web application designed for customers 
 
 ## Features
 
+![Shop For Home Customer Product List View](./images/customer_home.png)
+
 Shop For Home consists of a secure login page, an interface for customers to shop, and a separate interface for administrator functionalities.
 
 ### Login
